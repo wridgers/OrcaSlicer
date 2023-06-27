@@ -5,6 +5,8 @@
 #ifndef IMGUI_DEFINE_MATH_OPERATORS
 #define IMGUI_DEFINE_MATH_OPERATORS
 #endif
+
+#include <boost/log/trivial.hpp>
 #include <imgui/imgui_internal.h>
 
 namespace Slic3r {
@@ -309,8 +311,8 @@ void IMSlider::SetLayersTimes(const std::vector<double> &layers_times)
 
 void IMSlider::SetDrawMode(bool is_sequential_print)
 {
-    m_draw_mode = is_sequential_print   ? dmSequentialFffPrint  : 
-                                          dmRegular; 
+    m_draw_mode = is_sequential_print   ? dmSequentialFffPrint  :
+                                          dmRegular;
     m_can_change_color = m_can_change_color && !(m_draw_mode == dmSequentialFffPrint);
 }
 
@@ -420,7 +422,7 @@ bool IMSlider::check_ticks_changed_event(Type type)
                                                              _L("The last color change data was saved for a multi extruder printing.")) +
                            "\n" + _L("Your current changes will delete all saved color changes.") + "\n\n\t" + _L("Are you sure you want to continue?");
 
-        
+
         GUI::MessageDialog msg(this, message, _L("Notice"), wxYES_NO);
         if (msg.ShowModal() == wxID_YES) {
             m_ticks.erase_all_ticks_with_code(ColorChange);
@@ -810,16 +812,16 @@ bool IMSlider::vertical_slider(const char* str_id, int* higher_value, int* lower
     ImRect one_handle = ImRect(higher_handle.Min - ImVec2(one_handle_offset, 0), higher_handle.Max - ImVec2(one_handle_offset, 0));
 
     bool value_changed = false;
-    if (!one_layer_flag) 
+    if (!one_layer_flag)
     {
         // select higher handle by default
         static bool h_selected = (selection == ssHigher);
         if (ImGui::ItemHoverable(higher_handle, id) && context.IO.MouseClicked[0]) {
-            selection = ssHigher; 
+            selection = ssHigher;
             h_selected = true;
         }
         if (ImGui::ItemHoverable(lower_handle, id) && context.IO.MouseClicked[0]) {
-            selection = ssLower; 
+            selection = ssLower;
             h_selected = false;
         }
 
@@ -827,7 +829,7 @@ bool IMSlider::vertical_slider(const char* str_id, int* higher_value, int* lower
         if (h_selected)
         {
             value_changed = slider_behavior(id, higher_slideable_region, v_min, v_max,
-                higher_value, &higher_handle, ImGuiSliderFlags_Vertical, 
+                higher_value, &higher_handle, ImGuiSliderFlags_Vertical,
                 m_tick_value, m_tick_rect);
         }
         if (!h_selected) {
@@ -912,7 +914,7 @@ bool IMSlider::vertical_slider(const char* str_id, int* higher_value, int* lower
         window->DrawList->AddTriangleFilled(pos_1, pos_2, pos_3, white_bg);
         ImGui::RenderText(text_start + text_padding, lower_label.c_str());
     }
-    if (one_layer_flag) 
+    if (one_layer_flag)
     {
         // update handle position
         value_changed = slider_behavior(id, one_slideable_region, v_min, v_max,
@@ -927,7 +929,7 @@ bool IMSlider::vertical_slider(const char* str_id, int* higher_value, int* lower
         if ((!ImGui::ItemHoverable(one_handle, id) && context.IO.MouseClicked[1]) ||
             context.IO.MouseClicked[0])
             m_show_menu = false;
-        
+
         ImVec2 bar_center = higher_handle.GetCenter();
 
         // draw ticks
@@ -1065,7 +1067,7 @@ void IMSlider::render_input_custom_gcode(std::string custom_gcode)
         }
         const int text_height = 6;
 
-        ImGui::InputTextMultiline("##text", m_custom_gcode, sizeof(m_custom_gcode), ImVec2(-1, ImGui::GetTextLineHeight() * text_height), ImGuiInputTextFlags_CallbackAlways, [](ImGuiInputTextCallbackData* data) { 
+        ImGui::InputTextMultiline("##text", m_custom_gcode, sizeof(m_custom_gcode), ImVec2(-1, ImGui::GetTextLineHeight() * text_height), ImGuiInputTextFlags_CallbackAlways, [](ImGuiInputTextCallbackData* data) {
             return data->CursorPos = data->BufTextLen;
             });
 
@@ -1235,7 +1237,7 @@ void IMSlider::render_add_menu()
             }
             if (hovered) { show_tooltip(_u8L("Insert a pause command at the beginning of this layer.")); }
 
-            
+
             if (menu_item_with_icon(_u8L("Add Custom G-code").c_str(), "", ImVec2(0, 0), 0, false, menu_item_enable, &hovered)) {
                 m_show_custom_gcode_window = true;
             }
@@ -1357,7 +1359,7 @@ void IMSlider::on_mouse_wheel(wxMouseEvent& evt) {
     }
     else if (wxGetKeyState(WXK_RAW_CONTROL)) {
         wheel *= 5;
-    } 
+    }
 #else
     if (wxGetKeyState(WXK_COMMAND) || wxGetKeyState(WXK_SHIFT))
         wheel *= 5;
@@ -1551,5 +1553,3 @@ std::array<int, 2> IMSlider::get_active_extruders_for_tick(int tick) const
 }
 
 } // Slic3r
-
-

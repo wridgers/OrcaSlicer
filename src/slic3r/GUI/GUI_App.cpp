@@ -19,6 +19,8 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/nowide/convert.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 
 #include <wx/stdpaths.h>
 #include <wx/imagpng.h>
@@ -1829,7 +1831,7 @@ void GUI_App::init_networking_callbacks()
                     wxCommandEvent event(EVT_CONNECT_LAN_MODE_PRINT);
 
                     if (obj) {
-                        
+
                         if (obj->is_lan_mode_printer()) {
                             if (state == ConnectStatus::ConnectStatusOk) {
                                 obj->command_request_push_all();
@@ -2956,7 +2958,7 @@ void GUI_App::UpdateDarkUI(wxWindow* window, bool highlited/* = false*/, bool ju
 
     /*if (m_is_dark_mode != dark_mode() )
         m_is_dark_mode = dark_mode();*/
-    
+
 
     if (m_is_dark_mode) {
         auto original_col = window->GetBackgroundColour();
@@ -4185,7 +4187,7 @@ void GUI_App::check_new_version_sf(bool show_tips, int by_user)
             GUI::wxGetApp().QueueEvent(evt);
             })
             .perform_sync();;
-            
+
 }
 
 //BBS pop up a dialog and download files

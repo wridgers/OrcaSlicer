@@ -12,6 +12,8 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/nowide/convert.hpp>
+#include <boost/nowide/fstream.hpp>
+#include <boost/nowide/cstdio.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 
 #include "libslic3r/libslic3r.h"
@@ -1600,8 +1602,8 @@ void PartPlate::generate_plate_name_texture()
 		m_plate_name_vbo_id = 0;
 	}
 }
-void PartPlate::set_plate_name(const std::string& name) 
-{ 
+void PartPlate::set_plate_name(const std::string& name)
+{
 	// compare if name equal to m_name, case sensitive
     if (boost::equals(m_name, name))
         return;

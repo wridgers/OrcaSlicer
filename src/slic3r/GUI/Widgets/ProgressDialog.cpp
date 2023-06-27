@@ -13,6 +13,7 @@
 #include "wx/timer.h"
 #include "wx/settings.h"
 #include "wx/app.h"
+#include "wx/progdlg.h"
 #endif
 
 #include "../GUI.hpp"
@@ -124,7 +125,7 @@ wxString ProgressDialog::FormatString(wxString title)
         m_msg_scrolledWindow->Fit();
     }
 
-    
+
     //Fit();
     return title;
 }

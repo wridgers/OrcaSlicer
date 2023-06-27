@@ -154,8 +154,8 @@ public:
     int          get_current_filament_id(){return m_current_filament_id;};
     bool         is_match_material(std::string material);
     void         on_left_down(wxMouseEvent &evt);
-    virtual void OnDismiss() wxOVERRIDE;
-    virtual bool ProcessLeftDown(wxMouseEvent &event) wxOVERRIDE;
+    virtual void OnDismiss() override;
+    virtual bool ProcessLeftDown(wxMouseEvent &event) override;
     void         paintEvent(wxPaintEvent &evt);
     void         set_parent_item(wxWindow* item) {m_parent_item = item;};
     std::vector<TrayData> parse_ams_mapping(std::map<std::string, Ams*> amsList);
@@ -168,8 +168,8 @@ public:
     ~AmsMapingTipPopup(){};
     void paintEvent(wxPaintEvent &evt);
 
-    virtual void OnDismiss() wxOVERRIDE;
-    virtual bool ProcessLeftDown(wxMouseEvent &event) wxOVERRIDE;
+    virtual void OnDismiss() override;
+    virtual bool ProcessLeftDown(wxMouseEvent &event) override;
 
 public:
     wxPanel *        m_panel_enable_ams;
@@ -188,8 +188,8 @@ public:
     ~AmsHumidityTipPopup() {};
     void paintEvent(wxPaintEvent& evt);
 
-    virtual void OnDismiss() wxOVERRIDE;
-    virtual bool ProcessLeftDown(wxMouseEvent& event) wxOVERRIDE;
+    virtual void OnDismiss() override;
+    virtual bool ProcessLeftDown(wxMouseEvent& event) override;
 
 public:
     wxStaticBitmap* m_img;
@@ -218,8 +218,8 @@ public:
     ~AmsTutorialPopup() {};
 
     void paintEvent(wxPaintEvent& evt);
-    virtual void OnDismiss() wxOVERRIDE;
-    virtual bool ProcessLeftDown(wxMouseEvent& event) wxOVERRIDE;
+    virtual void OnDismiss() override;
+    virtual bool ProcessLeftDown(wxMouseEvent& event) override;
 };
 
 
@@ -237,8 +237,8 @@ public:
 
     void set_mode(bool enable_ams);
     void paintEvent(wxPaintEvent& evt);
-    virtual void OnDismiss() wxOVERRIDE;
-    virtual bool ProcessLeftDown(wxMouseEvent& event) wxOVERRIDE;
+    virtual void OnDismiss() override;
+    virtual bool ProcessLeftDown(wxMouseEvent& event) override;
 };
 
 

@@ -4,6 +4,8 @@
 #include <string>
 #include <functional>
 
+#include <wx/string.h>
+
 namespace Slic3r {
 
 /**
@@ -11,12 +13,12 @@ namespace Slic3r {
  */
 class ProgressIndicator {
 public:
-    
+
     /// Cancel callback function type
     using CancelFn = std::function<void()>;
-    
+
     virtual ~ProgressIndicator() = default;
-    
+
     virtual void clear_percent() = 0;
     virtual void show_networking_test(wxString msg) = 0;
     virtual void set_range(int range) = 0;

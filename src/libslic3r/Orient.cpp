@@ -4,12 +4,13 @@
 #include <ClipperUtils.hpp>
 #include <boost/geometry/index/rtree.hpp>
 #include <tbb/parallel_for.h>
-#include <tbb/atomic.h>
+/* #include <tbb/atomic.h> */
 
 #if defined(_MSC_VER) && defined(__clang__)
 #define BOOST_NO_CXX17_HDR_STRING_VIEW
 #endif
 
+#include <boost/log/trivial.hpp>
 #include <boost/multiprecision/integer.hpp>
 #include <boost/rational.hpp>
 
@@ -87,7 +88,7 @@ public:
         params = params_;
         progressind = progressind_;
         params.ASCENT = cos(PI - orient_mesh->overhang_angle * PI / 180); // use per-object overhang angle
-        
+
         // BOOST_LOG_TRIVIAL(info) << orient_mesh->name << ", angle=" << orient_mesh->overhang_angle << ", params.ASCENT=" << params.ASCENT;
         // std::cout << orient_mesh->name << ", angle=" << orient_mesh->overhang_angle << ", params.ASCENT=" << params.ASCENT;
 
@@ -161,9 +162,9 @@ public:
 
         for (int i = 1; i< results_vector.size()-1; i++) {
             if (abs(results_vector[i].second.unprintability - results_vector[0].second.unprintability) < EPSILON && abs(results_vector[0].first.dot(n1)-1) > EPSILON) {
-                if (abs(results_vector[i].first.dot(n1)-1) < EPSILON*EPSILON) { 
+                if (abs(results_vector[i].first.dot(n1)-1) < EPSILON*EPSILON) {
                     best_orientation = n1;
-                    break; 
+                    break;
                 }
             }
             else {
@@ -385,7 +386,7 @@ public:
         auto bottom_condition = z_max.array() < total_min_z + this->params.FIRST_LAY_H - EPSILON;
         auto bottom_condition_hull = z_max_hull.array() < total_min_z + this->params.FIRST_LAY_H - EPSILON;
         auto bottom_condition_2nd = z_max.array() < total_min_z + this->params.FIRST_LAY_H/2.f - EPSILON;
-        //The first layer is sliced on half of the first layer height. 
+        //The first layer is sliced on half of the first layer height.
         //The bottom area is measured by accumulating first layer area with the facets area below first layer height.
         //By combining these two factors, we can avoid the wrong orientation of large planar faces while not influence the
         //orientations of complex objects with small bottom areas.

@@ -5,6 +5,8 @@
 #include "GUI_App.hpp"
 #include "libslic3r/Thread.hpp"
 
+#include <boost/log/trivial.hpp>
+
 namespace Slic3r {
 namespace GUI {
 
@@ -31,7 +33,7 @@ MachineInfoPanel::MachineInfoPanel(wxWindow* parent, wxWindowID id, const wxPoin
     wxBoxSizer *m_ota_sizer = new wxBoxSizer(wxHORIZONTAL);
 
     m_printer_img = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxSize(FromDIP(200), FromDIP(200)));
-   
+
     m_printer_img->SetBitmap(m_img_printer);
     m_ota_sizer->Add(m_printer_img, 0, wxALIGN_CENTER_VERTICAL | wxALL, 0);
 
@@ -97,7 +99,7 @@ MachineInfoPanel::MachineInfoPanel(wxWindow* parent, wxWindowID id, const wxPoin
     m_ams_sizer = new wxBoxSizer(wxHORIZONTAL);
     m_ams_img   = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxSize(FromDIP(200), FromDIP(200)));
 
-   
+
 
     m_ams_img->SetBitmap(m_img_monitor_ams);
     m_ams_sizer->Add(m_ams_img, 0, wxALIGN_TOP | wxALL, FromDIP(5));
@@ -109,7 +111,7 @@ MachineInfoPanel::MachineInfoPanel(wxWindow* parent, wxWindowID id, const wxPoin
     m_ahb_panel = new AmsPanel(this, wxID_ANY);
     m_ahb_panel->m_staticText_ams->SetLabel("AMS HUB");
     m_ams_content_sizer->Add(m_ahb_panel, 0, wxEXPAND, 0);
-   
+
 
     m_ams_info_sizer = new wxFlexGridSizer(0, 2, FromDIP(30), FromDIP(30));
     m_ams_info_sizer->SetFlexibleDirection(wxHORIZONTAL);
@@ -266,7 +268,7 @@ wxPanel *MachineInfoPanel::create_caption_panel(wxWindow *parent)
     return caption_panel;
 }
 
-void MachineInfoPanel::msw_rescale() 
+void MachineInfoPanel::msw_rescale()
 {
     init_bitmaps();
     m_button_upgrade_firmware->SetSize(wxSize(FromDIP(-1), FromDIP(24)));
@@ -433,7 +435,7 @@ void MachineInfoPanel::update_ams_ext(MachineObject *obj)
     bool has_hub_model = false;
 
     //hub
-    if (!obj->online_ahb || obj->module_vers.find("ahb") == obj->module_vers.end()) 
+    if (!obj->online_ahb || obj->module_vers.find("ahb") == obj->module_vers.end())
         m_ahb_panel->Hide();
     else {
         has_hub_model = true;
@@ -451,14 +453,14 @@ void MachineInfoPanel::update_ams_ext(MachineObject *obj)
             wxString sn_text = obj->module_vers.find("ahb")->second.sn;
             hub_sn           = sn_text.MakeUpper();
         }
-        
+
 
         wxString hub_ver = "-";
         if (!obj->module_vers.find("ahb")->second.sw_ver.empty()) {
             wxString sn_text = obj->module_vers.find("ahb")->second.sw_ver;
             hub_ver          = sn_text.MakeUpper();
         }
-        
+
        /* auto ver_item = obj->new_ver_list.find("ahb");
         if (ver_item != obj->new_ver_list.end()) {
             m_ahb_panel->m_ams_new_version_img->Show();
@@ -609,7 +611,7 @@ void MachineInfoPanel::update_ams_ext(MachineObject *obj)
         }
     } else {
         if (!has_hub_model) { show_ams(false); }
-        
+
     }
 
     //ext
@@ -639,7 +641,7 @@ void MachineInfoPanel::update_ams_ext(MachineObject *obj)
         // set sn and version
         m_ext_panel->m_staticText_ext_sn_val->SetLabelText(sn_text);
         m_ext_panel->m_staticText_ext_ver_val->SetLabelText(ext_ver);
-        
+
         show_ext(true);
     }
 
@@ -787,7 +789,7 @@ void MachineInfoPanel::on_consisitency_upgrade_firmware(wxCommandEvent &event)
     confirm_dlg->on_show();
 }
 
-void MachineInfoPanel::on_show_release_note(wxMouseEvent &event) 
+void MachineInfoPanel::on_show_release_note(wxMouseEvent &event)
 {
     DeviceManager *dev = wxGetApp().getDeviceManager();
     if (!dev) return;
@@ -802,7 +804,7 @@ void MachineInfoPanel::on_show_release_note(wxMouseEvent &event)
             version_number            = m_obj->ota_new_version_number;
             next_version_release_note = wxString::FromUTF8(iter.description);
         }
-        if (iter.version == m_obj->get_ota_version()) { 
+        if (iter.version == m_obj->get_ota_version()) {
             version_number           = m_obj->get_ota_version();
             now_version_release_note = wxString::FromUTF8(iter.description);
         }
@@ -852,8 +854,8 @@ UpgradePanel::~UpgradePanel()
         delete consistency_dlg ;
 }
 
-void UpgradePanel::msw_rescale() 
-{ 
+void UpgradePanel::msw_rescale()
+{
     if (m_push_upgrade_panel)
         m_push_upgrade_panel->msw_rescale();
 }
@@ -1052,7 +1054,7 @@ bool UpgradePanel::Show(bool show)
      Layout();
  }
 
- AmsPanel::~AmsPanel() 
+ AmsPanel::~AmsPanel()
  {
 
  }

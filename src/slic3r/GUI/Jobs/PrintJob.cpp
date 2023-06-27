@@ -7,6 +7,8 @@
 #include "slic3r/GUI/GUI.hpp"
 #include "slic3r/GUI/GUI_App.hpp"
 
+#include <boost/log/trivial.hpp>
+
 namespace Slic3r {
 namespace GUI {
 
@@ -104,7 +106,7 @@ wxString PrintJob::get_http_error_msg(unsigned int status, std::string body)
         ;
     }
     return wxEmptyString;
-} 
+}
 
 void PrintJob::process()
 {
@@ -373,7 +375,7 @@ void PrintJob::process()
                 this->update_status(curr_percent, _L("Sending print job through cloud service"));
                 result = m_agent->start_print(params, update_fn, cancel_fn);
             }
-        } 
+        }
     } else {
         if (this->has_sdcard) {
             this->update_status(curr_percent, _L("Sending print job over LAN"));
@@ -400,7 +402,7 @@ void PrintJob::process()
         } else if (result == BAMBU_NETWORK_ERR_TIMEOUT) {
             msg_text = timeout_to_upload_str;
         } else if (result == BAMBU_NETWORK_ERR_INVALID_RESULT) {
-            msg_text = _L("Failed to send the print job. Please try again."); 
+            msg_text = _L("Failed to send the print job. Please try again.");
         } else if (result == BAMBU_NETWORK_ERR_FTP_UPLOAD_FAILED) {
             msg_text = _L("Failed to send the print job. Please try again.");
         } else {
@@ -410,8 +412,8 @@ void PrintJob::process()
             curr_percent = 0;
             msg_text += wxString::Format("[%d][%s]", result, error_text);
         }
-        
-        
+
+
         if (result == BAMBU_NETWORK_ERR_INVALID_RESULT) {
             this->show_networking_test(msg_text);
         }

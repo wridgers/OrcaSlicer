@@ -1,5 +1,7 @@
 #include "StaticBox.hpp"
 #include "../GUI.hpp"
+
+#include <wx/dcclient.h>
 #include <wx/dcgraph.h>
 
 BEGIN_EVENT_TABLE(StaticBox, wxWindow)
@@ -21,7 +23,7 @@ StaticBox::StaticBox()
     , radius(8)
 {
     border_color = StateColor(
-        std::make_pair(0xF0F0F1, (int) StateColor::Disabled), 
+        std::make_pair(0xF0F0F1, (int) StateColor::Disabled),
         std::make_pair(0x303A3C, (int) StateColor::Normal));
 }
 

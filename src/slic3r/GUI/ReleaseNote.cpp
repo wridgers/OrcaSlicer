@@ -21,6 +21,8 @@
 #include <algorithm>
 #include "Plater.hpp"
 #include "BitmapCache.hpp"
+#include <boost/log/trivial.hpp>
+#include <boost/nowide/fstream.hpp>
 
 namespace Slic3r { namespace GUI {
 
@@ -265,16 +267,16 @@ UpdateVersionDialog::UpdateVersionDialog(wxWindow *parent)
     wxBoxSizer *m_sizer_main = new wxBoxSizer(wxVERTICAL);
     auto        m_line_top   = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 1));
     m_line_top->SetBackgroundColour(wxColour(166, 169, 170));
-    
+
 
     wxBoxSizer *m_sizer_body = new wxBoxSizer(wxHORIZONTAL);
 
-    
+
 
     auto sm    = create_scaled_bitmap("BambuStudio", nullptr, 70);
     m_brand = new wxStaticBitmap(this, wxID_ANY, sm, wxDefaultPosition, wxSize(FromDIP(70), FromDIP(70)));
 
-    
+
 
     wxBoxSizer *m_sizer_right = new wxBoxSizer(wxVERTICAL);
 
@@ -283,7 +285,7 @@ UpdateVersionDialog::UpdateVersionDialog(wxWindow *parent)
     m_text_up_info->SetForegroundColour(wxColour(0x26, 0x2E, 0x30));
     m_text_up_info->Wrap(-1);
 
-    
+
 
     m_simplebook_release_note = new wxSimplebook(this);
     m_simplebook_release_note->SetSize(wxSize(FromDIP(560), FromDIP(430)));
@@ -488,7 +490,7 @@ void UpdateVersionDialog::update_version_info(wxString release_note, wxString ve
             }
         }
     }
-   
+
 
     if (use_web_link) {
         m_brand->Hide();
@@ -1017,7 +1019,7 @@ InputIpAddressDialog::InputIpAddressDialog(wxWindow* parent)
     m_input_tip_area->Add(m_tips_ip, 0, wxALIGN_CENTER, 0);
     m_input_tip_area->Add(0, 0, 0, wxLEFT, FromDIP(16));
     m_input_tip_area->Add(m_tips_access_code, 0, wxALIGN_CENTER, 0);
-   
+
     m_input_area->Add(m_input_ip, 0, wxALIGN_CENTER, 0);
     m_input_area->Add(0, 0, 0, wxLEFT, FromDIP(16));
     m_input_area->Add(m_input_access_code, 0, wxALIGN_CENTER, 0);
@@ -1034,9 +1036,9 @@ InputIpAddressDialog::InputIpAddressDialog(wxWindow* parent)
     m_tip3->Wrap(FromDIP(352));
 
     m_img_help1 = new wxStaticBitmap(this, wxID_ANY, create_scaled_bitmap("input_accesscode_help1", this, 198), wxDefaultPosition, wxSize(FromDIP(352), FromDIP(198)), 0);
-    
+
     m_img_help2 = new wxStaticBitmap(this, wxID_ANY, create_scaled_bitmap("input_accesscode_help2", this, 118), wxDefaultPosition, wxSize(FromDIP(352), FromDIP(118)), 0);
-    
+
     m_img_help1->Hide();
     m_img_help2->Hide();
 
@@ -1057,7 +1059,7 @@ InputIpAddressDialog::InputIpAddressDialog(wxWindow* parent)
     m_button_ok->SetSize(wxSize(FromDIP(58), FromDIP(24)));
     m_button_ok->SetMinSize(wxSize(FromDIP(58), FromDIP(24)));
     m_button_ok->SetCornerRadius(FromDIP(12));
-   
+
 
     m_button_ok->Bind(wxEVT_LEFT_DOWN, &InputIpAddressDialog::on_ok, this);
 
@@ -1098,7 +1100,7 @@ InputIpAddressDialog::InputIpAddressDialog(wxWindow* parent)
     m_img_step2 = new wxStaticBitmap(m_step_icon_panel2, wxID_ANY, create_scaled_bitmap("ip_address_step", this, 6), wxDefaultPosition, wxSize(FromDIP(6), FromDIP(6)), 0);
 
     m_sizer_step_icon_panel1->Add(m_img_step1, 0, wxALIGN_CENTER|wxALL, FromDIP(5));
-   
+
 
     m_step_icon_panel1->SetSizer(m_sizer_step_icon_panel1);
     m_step_icon_panel1->Layout();
@@ -1120,7 +1122,7 @@ InputIpAddressDialog::InputIpAddressDialog(wxWindow* parent)
     m_sizer_main_left->Add(0, 0, 0, wxTOP, FromDIP(20));
     m_sizer_main_left->Add(m_step_icon_panel2, 0, wxEXPAND, 0);
 
-   
+
     m_sizer_main_right->Add(m_tip1, 0, wxRIGHT|wxEXPAND, FromDIP(18));
     m_sizer_main_right->Add(0, 0, 0, wxTOP, FromDIP(20));
     m_sizer_main_right->Add(m_line_tips, 0, wxRIGHT|wxEXPAND, FromDIP(18));
@@ -1133,11 +1135,11 @@ InputIpAddressDialog::InputIpAddressDialog(wxWindow* parent)
     m_sizer_main_right->Add(m_error_msg, 0, wxRIGHT|wxEXPAND, FromDIP(18));
     m_sizer_main_right->Add(0, 0, 0, wxTOP, FromDIP(16));
     m_sizer_main_right->Add(m_tip3, 0, wxRIGHT|wxEXPAND, FromDIP(18));
-    
+
     m_sizer_main_right->Add(0, 0, 0, wxTOP, FromDIP(4));
     m_sizer_main_right->Add(m_img_help1, 0, 0, 0);
     m_sizer_main_right->Add(m_img_help2, 0, 0, 0);
-    
+
     m_sizer_main_right->Add(0, 0, 0, wxTOP, FromDIP(30));
     m_sizer_main_right->Add(sizer_button, 1, wxRIGHT|wxEXPAND, FromDIP(18));
     m_sizer_main_right->Add(0, 0, 0, wxTOP, FromDIP(16));
@@ -1158,7 +1160,7 @@ InputIpAddressDialog::InputIpAddressDialog(wxWindow* parent)
         m_button_ok->SetBackgroundColor(wxColour(0x90, 0x90, 0x90));
         m_button_ok->SetBorderColor(wxColour(0x90, 0x90, 0x90));
     }
-   
+
     m_sizer_main->Add(m_sizer_main_left, 0, wxLEFT, FromDIP(18));
     m_sizer_main->Add(m_sizer_main_right, 0, wxLEFT|wxEXPAND, FromDIP(4));
     m_sizer_main->Layout();
@@ -1166,7 +1168,7 @@ InputIpAddressDialog::InputIpAddressDialog(wxWindow* parent)
     m_sizer_body->Add(m_line_top, 0, wxEXPAND, 0);
     m_sizer_body->Add(0, 0, 0, wxTOP, FromDIP(20));
     m_sizer_body->Add(m_sizer_main, 0, wxEXPAND, 0);
-   
+
     SetSizer(m_sizer_body);
     Layout();
     Fit();

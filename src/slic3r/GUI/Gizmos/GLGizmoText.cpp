@@ -14,6 +14,7 @@
 
 #include <numeric>
 
+#include <boost/log/trivial.hpp>
 #include <GL/glew.h>
 
 #ifndef IMGUI_DEFINE_MATH_OPERATORS
@@ -21,6 +22,7 @@
 #endif
 #include <imgui/imgui_internal.h>
 #include "libslic3r/SVG.hpp"
+#include "libslic3r/ClipperUtils.hpp"
 #include <codecvt>
 
 namespace Slic3r {
@@ -382,7 +384,7 @@ void GLGizmoText::on_render()
 
     ModelObject *mo = nullptr;
     mo = m_c->selection_info()->model_object();
-    
+
     if (mo == nullptr) {
         const Selection &selection = m_parent.get_selection();
         mo = selection.get_model()->objects[m_object_idx];
@@ -395,7 +397,7 @@ void GLGizmoText::on_render()
 
     // First check that the mouse pointer is on an object.
     const Selection &    selection = m_parent.get_selection();
-    const ModelInstance *mi        = mo->instances[0];    
+    const ModelInstance *mi        = mo->instances[0];
     Plater *plater = wxGetApp().plater();
     if (!plater)
         return;
@@ -448,7 +450,7 @@ void GLGizmoText::on_render()
         m_grabbers[0].color        = color;
         m_grabbers[0].render_for_picking(mean_size);
     }
-    
+
     delete_temp_preview_text_volume();
 
     if (m_is_modify && !m_need_update_text)
@@ -582,7 +584,7 @@ void GLGizmoText::push_button_style(bool pressed) {
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(238 / 255.f, 238 / 255.f, 238 / 255.f, 1.f));
             ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(1.f, 1.f, 1.f, 1.f));
         }
-    
+
     }
 }
 
@@ -827,7 +829,7 @@ void GLGizmoText::on_render_input_window(float x, float y, float bottom_limit)
 
     float f_scale = m_parent.get_gizmos_manager().get_layout_scale();
     ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(6.0f, 4.0f * f_scale));
-    
+
     ImGui::SameLine(caption_size);
     ImGui::AlignTextToFramePadding();
     if (m_imgui->bbl_checkbox(_L("Surface"), m_is_surface_text))
@@ -997,7 +999,7 @@ bool GLGizmoText::update_text_positions(const std::vector<std::string>& texts)
     Vec3d temp_position = m_mouse_position_world;
     Vec3d temp_normal   = m_mouse_normal_world;
 
-    Vec3d cut_plane = Vec3d::UnitY(); 
+    Vec3d cut_plane = Vec3d::UnitY();
     if (temp_normal != Vec3d::UnitZ()) {
         Vec3d v_plane   = temp_normal.cross(Vec3d::UnitZ());
         cut_plane = v_plane.cross(temp_normal);
@@ -1433,7 +1435,7 @@ bool GLGizmoText::update_raycast_cache(const Vec2d &mouse_position, const Camera
             }
         }
     }
-    
+
     m_rr = {mouse_position, closest_hit_mesh_id, closest_hit, closest_nromal};
     return true;
 }

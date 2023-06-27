@@ -2,6 +2,7 @@
 #include "Print.hpp"
 
 #include <cfloat>
+#include <boost/log/trivial.hpp>
 
 namespace Slic3r {
 

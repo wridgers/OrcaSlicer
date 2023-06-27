@@ -16,6 +16,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include <boost/log/trivial.hpp>
 
 
 namespace pt = boost::property_tree;
@@ -513,7 +514,7 @@ bool MachineObject::is_extrusion_cali_finished()
     if (diff.count() < EXTRUSION_OMIT_TIME) {
         return false;
     }
-    
+
     if (boost::contains(m_gcode_file, "extrusion_cali")
         && this->mc_print_percent == 100)
         return true;
@@ -807,7 +808,7 @@ int MachineObject::ams_filament_mapping(std::vector<FilamentInfo> filaments, std
         }
     }
 
-    
+
     // is_support_ams_mapping
     if (!is_support_ams_mapping()) {
         BOOST_LOG_TRIVIAL(info) << "ams_mapping: do not support, use order mapping";
@@ -2656,7 +2657,7 @@ int MachineObject::parse_json(std::string payload)
                     if (jj.contains("heatbreak_fan_speed")) {
                         heatbreak_fan_speed = stoi(jj["heatbreak_fan_speed"].get<std::string>());
                     }
-                    
+
                     /* parse speed */
                     try {
                         if (jj.contains("spd_lvl")) {
@@ -3102,7 +3103,7 @@ int MachineObject::parse_json(std::string payload)
                                         ;
                                     }
                                 }
-                                
+
 
                                 if (it->contains("tray")) {
                                     std::set<std::string> tray_id_set;
@@ -3210,7 +3211,7 @@ int MachineObject::parse_json(std::string payload)
                                                 }
                                             }
                                         }
-                                 
+
                                         if (tray_it->contains("remain")) {
                                             curr_tray->remain = (*tray_it)["remain"].get<int>();
                                         } else {
@@ -3231,7 +3232,7 @@ int MachineObject::parse_json(std::string payload)
                                             curr_tray->filament_setting_id = (*tray_it)["setting_id"].get<std::string>();
                                         }
 
-                                        
+
                                         auto curr_time = std::chrono::system_clock::now();
                                         auto diff = std::chrono::duration_cast<std::chrono::milliseconds>(curr_time - extrusion_cali_set_hold_start);
                                         if (diff.count() > HOLD_TIMEOUT || diff.count() < 0

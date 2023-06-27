@@ -13,6 +13,9 @@
 
 #include "RecenterDialog.hpp"
 
+#include <boost/log/trivial.hpp>
+#include <wx/display.h>
+
 
 namespace Slic3r { namespace GUI {
 
@@ -1620,13 +1623,13 @@ void StatusPanel::show_error_message(MachineObject* obj, wxString msg, std::stri
             m_print_error_dlg->update_title_style(_L("Warning"), SecondaryCheckDialog::ButtonStyle::ONLY_CONFIRM, this);
         }
         m_print_error_dlg->update_text(msg);
-        
+
         m_print_error_dlg->Bind(EVT_SECONDARY_CHECK_CONFIRM, [this, obj](wxCommandEvent& e) {
             if (obj) {
                 obj->command_clean_print_error(obj->subtask_id_, obj->print_error);
             }
         });
-        
+
 
         m_print_error_dlg->on_show();
     }
@@ -1947,7 +1950,7 @@ void StatusPanel::update_ams(MachineObject *obj)
     if (!is_none_ams_mode) {
          show_ams_group(true, obj->is_function_supported(PrinterFunction::FUNC_VIRTUAL_TYAY), obj->is_function_supported(PrinterFunction::FUNC_EXTRUSION_CALI), obj->is_support_filament_edit_virtual_tray);
     }
-   
+
     if (m_filament_setting_dlg) m_filament_setting_dlg->update();
 
     std::vector<AMSinfo> ams_info;
@@ -2007,7 +2010,7 @@ void StatusPanel::update_ams(MachineObject *obj)
         m_ams_control->SetExtruder(obj->is_filament_at_extruder(), true, obj->vt_tray.get_color());
     } else {
         m_ams_control->SetExtruder(obj->is_filament_at_extruder(), false, m_ams_control->GetCanColour(obj->m_ams_id, obj->m_tray_id));
-       
+
     }
 
     if (obj->ams_status_main == AMS_STATUS_MAIN_FILAMENT_CHANGE) {
@@ -2061,7 +2064,7 @@ void StatusPanel::update_ams(MachineObject *obj)
                     }else{
                         m_ams_control->SetFilamentStep(FilamentStep::STEP_PUSH_NEW_FILAMENT, FilamentStepType::STEP_TYPE_LOAD);
                     }
-                    
+
                 }
                 else {
                     m_ams_control->SetFilamentStep(FilamentStep::STEP_PUSH_NEW_FILAMENT, FilamentStepType::STEP_TYPE_UNLOAD);
@@ -2093,7 +2096,7 @@ void StatusPanel::update_ams(MachineObject *obj)
     } else {
         m_ams_control->SetFilamentStep(FilamentStep::STEP_IDLE, FilamentStepType::STEP_TYPE_LOAD);
     }
-    
+
 
     for (auto ams_it = obj->amsList.begin(); ams_it != obj->amsList.end(); ams_it++) {
         std::string ams_id = ams_it->first;
@@ -2140,7 +2143,7 @@ void StatusPanel::update_ams(MachineObject *obj)
     }else {
         is_curr_tray_selected = true;
     }
-        
+
     update_ams_control_state(is_support_extrusion_cali, is_curr_tray_selected);
 }
 
@@ -2482,7 +2485,7 @@ bool StatusPanel::check_axis_z_at_home(MachineObject* obj)
 }
 
 void StatusPanel::on_axis_ctrl_z_up_10(wxCommandEvent &event)
-{    
+{
     if (obj) {
         obj->command_axis_control("Z", 1.0, -10.0f, 900);
         if (!check_axis_z_at_home(obj))
@@ -2616,8 +2619,8 @@ void StatusPanel::on_ams_load_curr()
         }else{
             m_is_load_with_temp = false;
         }
-        
-        
+
+
         //virtual tray
         if (curr_ams_id.compare(std::to_string(VIRTUAL_TRAY_ID)) == 0) {
             /*if (con_load_dlg == nullptr) {
@@ -3076,7 +3079,7 @@ void StatusPanel::on_switch_speed(wxCommandEvent &event)
             speed_dismiss_time = boost::posix_time::microsec_clock::universal_time();
         }
         });
-    
+
     m_ams_control->Bind(EVT_CLEAR_SPEED_CONTROL, [this, popUp](auto& e) {
         if (m_showing_speed_popup) {
             if (popUp && popUp->IsShown()) {

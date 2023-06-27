@@ -3,7 +3,9 @@
 #include "Button.hpp"
 #include "TextCtrl.h"
 
+#include <wx/dcclient.h>
 #include <wx/dcgraph.h>
+#include <wx/valtext.h>
 
 BEGIN_EVENT_TABLE(SpinInput, wxPanel)
 
@@ -44,7 +46,7 @@ SpinInput::SpinInput(wxWindow *parent,
     Create(parent, text, label, pos, size, style, min, max, initial);
 }
 
-void SpinInput::Create(wxWindow *parent, 
+void SpinInput::Create(wxWindow *parent,
                      wxString       text,
                      wxString       label,
                      const wxPoint &pos,
@@ -137,7 +139,7 @@ void SpinInput::SetRange(int min, int max)
 }
 
 void SpinInput::DoSetToolTipText(wxString const &tip)
-{ 
+{
     wxWindow::DoSetToolTipText(tip);
     text_ctrl->SetToolTip(tip);
 }
@@ -323,5 +325,5 @@ void SpinInput::sendSpinEvent()
 {
     wxCommandEvent event(wxEVT_SPINCTRL, GetId());
     event.SetEventObject(this);
-    GetEventHandler()->ProcessEvent(event); 
+    GetEventHandler()->ProcessEvent(event);
 }

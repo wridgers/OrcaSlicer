@@ -253,4 +253,3 @@ public:
 } // namespace Slic3r
 
 #endif // slic3r_ImGuiWrapper_hpp_
-

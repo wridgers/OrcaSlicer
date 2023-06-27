@@ -4,6 +4,8 @@
 #include <functional>
 #include "Job.hpp"
 
+#include <boost/filesystem.hpp>
+
 namespace fs = boost::filesystem;
 
 namespace Slic3r {

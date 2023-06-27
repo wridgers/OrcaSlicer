@@ -43,15 +43,15 @@ public:
                       wxDC& dc,
                       const wxRect& rect,
                       int row, int col,
-                      bool isSelected) wxOVERRIDE;
+                      bool isSelected) override;
 
     virtual wxSize GetBestSize(wxGrid& WXUNUSED(grid),
                                wxGridCellAttr& attr,
                                wxDC& dc,
                                int WXUNUSED(row),
-                               int WXUNUSED(col)) wxOVERRIDE;
+                               int WXUNUSED(col)) override;
 
-    virtual GridCellIconRenderer *Clone() const wxOVERRIDE;
+    virtual GridCellIconRenderer *Clone() const override;
 };
 
 class GridCellTextEditor : public wxGridCellTextEditor
@@ -60,12 +60,12 @@ public:
     GridCellTextEditor();
     ~GridCellTextEditor();
 
-    virtual void Create(wxWindow *parent, wxWindowID id, wxEvtHandler *evtHandler) wxOVERRIDE;
-    void         StartingKey(wxKeyEvent &event) wxOVERRIDE;
-    virtual void SetSize(const wxRect &rect) wxOVERRIDE;
-    virtual void BeginEdit(int row, int col, wxGrid *grid) wxOVERRIDE;
-    virtual bool EndEdit(int row, int col, const wxGrid *grid, const wxString &oldval, wxString *newval) wxOVERRIDE;
-    virtual void ApplyEdit(int row, int col, wxGrid *grid) wxOVERRIDE;
+    virtual void Create(wxWindow *parent, wxWindowID id, wxEvtHandler *evtHandler) override;
+    void         StartingKey(wxKeyEvent &event) override;
+    virtual void SetSize(const wxRect &rect) override;
+    virtual void BeginEdit(int row, int col, wxGrid *grid) override;
+    virtual bool EndEdit(int row, int col, const wxGrid *grid, const wxString &oldval, wxString *newval) override;
+    virtual void ApplyEdit(int row, int col, wxGrid *grid) override;
 
 protected:
     ::TextInput *Text() const { return (::TextInput *) m_control; }
@@ -89,17 +89,17 @@ public:
 
     virtual void Create(wxWindow* parent,
                         wxWindowID id,
-                        wxEvtHandler* evtHandler) wxOVERRIDE;
-    virtual void SetSize(const wxRect& rect) wxOVERRIDE;
+                        wxEvtHandler* evtHandler) override;
+    virtual void SetSize(const wxRect& rect) override;
 
-    virtual wxGridCellEditor *Clone() const wxOVERRIDE;
+    virtual wxGridCellEditor *Clone() const override;
 
-    virtual void BeginEdit(int row, int col, wxGrid* grid) wxOVERRIDE;
+    virtual void BeginEdit(int row, int col, wxGrid* grid) override;
     virtual bool EndEdit(int row, int col, const wxGrid* grid,
-                         const wxString& oldval, wxString *newval) wxOVERRIDE;
+                         const wxString& oldval, wxString *newval) override;
 
-    virtual wxGridActivationResult TryActivate(int row, int col, wxGrid* grid, const wxGridActivationSource& actSource) wxOVERRIDE;
-    virtual void DoActivate(int row, int col, wxGrid* grid) wxOVERRIDE;
+    virtual wxGridActivationResult TryActivate(int row, int col, wxGrid* grid, const wxGridActivationSource& actSource) override;
+    virtual void DoActivate(int row, int col, wxGrid* grid) override;
 
 protected:
     ::ComboBox *Combo() const { return (::ComboBox *)m_control; }
@@ -121,15 +121,15 @@ public:
                       wxDC& dc,
                       const wxRect& rect,
                       int row, int col,
-                      bool isSelected) wxOVERRIDE;
+                      bool isSelected) override;
 
     virtual wxSize GetBestSize(wxGrid& WXUNUSED(grid),
                                wxGridCellAttr& attr,
                                wxDC& dc,
                                int WXUNUSED(row),
-                               int WXUNUSED(col)) wxOVERRIDE;
+                               int WXUNUSED(col)) override;
 
-    virtual GridCellFilamentsRenderer *Clone() const wxOVERRIDE;
+    virtual GridCellFilamentsRenderer *Clone() const override;
 };
 
 
@@ -139,16 +139,16 @@ public:
     GridCellChoiceEditor(size_t count = 0, const wxString choices[] = NULL);
     GridCellChoiceEditor(const wxArrayString &choices);
 
-    virtual void Create(wxWindow *parent, wxWindowID id, wxEvtHandler *evtHandler) wxOVERRIDE;
-    virtual void SetSize(const wxRect &rect) wxOVERRIDE;
+    virtual void Create(wxWindow *parent, wxWindowID id, wxEvtHandler *evtHandler) override;
+    virtual void SetSize(const wxRect &rect) override;
 
-    virtual wxGridCellEditor *Clone() const wxOVERRIDE;
+    virtual wxGridCellEditor *Clone() const override;
 
-    virtual void BeginEdit(int row, int col, wxGrid *grid) wxOVERRIDE;
-    virtual bool EndEdit(int row, int col, const wxGrid *grid, const wxString &oldval, wxString *newval) wxOVERRIDE;
+    virtual void BeginEdit(int row, int col, wxGrid *grid) override;
+    virtual bool EndEdit(int row, int col, const wxGrid *grid, const wxString &oldval, wxString *newval) override;
 
-    virtual wxGridActivationResult TryActivate(int row, int col, wxGrid *grid, const wxGridActivationSource &actSource) wxOVERRIDE;
-    virtual void                   DoActivate(int row, int col, wxGrid *grid) wxOVERRIDE;
+    virtual wxGridActivationResult TryActivate(int row, int col, wxGrid *grid, const wxGridActivationSource &actSource) override;
+    virtual void                   DoActivate(int row, int col, wxGrid *grid) override;
 
 protected:
     ::ComboBox *Combo() const { return (::ComboBox *) m_control; }
@@ -163,18 +163,18 @@ private:
 class GridCellComboBoxRenderer : public wxGridCellChoiceRenderer
 {
 public:
-    virtual void Draw(wxGrid &grid, wxGridCellAttr &attr, wxDC &dc, const wxRect &rect, int row, int col, bool isSelected) wxOVERRIDE;
+    virtual void Draw(wxGrid &grid, wxGridCellAttr &attr, wxDC &dc, const wxRect &rect, int row, int col, bool isSelected) override;
 
-    virtual wxSize GetBestSize(wxGrid &WXUNUSED(grid), wxGridCellAttr &attr, wxDC &dc, int WXUNUSED(row), int WXUNUSED(col)) wxOVERRIDE;
+    virtual wxSize GetBestSize(wxGrid &WXUNUSED(grid), wxGridCellAttr &attr, wxDC &dc, int WXUNUSED(row), int WXUNUSED(col)) override;
 
-    virtual GridCellComboBoxRenderer *Clone() const wxOVERRIDE;
+    virtual GridCellComboBoxRenderer *Clone() const override;
 };
 
 class GridCellSupportEditor : public wxGridCellBoolEditor
 {
 public:
     GridCellSupportEditor() { }
-    virtual void DoActivate(int row, int col, wxGrid* grid) wxOVERRIDE;
+    virtual void DoActivate(int row, int col, wxGrid* grid) override;
 
 private:
     void SetValueFromGrid(int row, int col, wxGrid* grid);
@@ -200,15 +200,15 @@ public:
                       wxDC& dc,
                       const wxRect& rect,
                       int row, int col,
-                      bool isSelected) wxOVERRIDE;
+                      bool isSelected) override;
 
     virtual wxSize GetBestSize(wxGrid& WXUNUSED(grid),
                                wxGridCellAttr& attr,
                                wxDC& dc,
                                int WXUNUSED(row),
-                               int WXUNUSED(col)) wxOVERRIDE;
+                               int WXUNUSED(col)) override;
 
-    virtual GridCellSupportRenderer *Clone() const wxOVERRIDE;
+    virtual GridCellSupportRenderer *Clone() const override;
 };
 
 
@@ -442,30 +442,30 @@ public:
     void release_object_configs();
     wxString convert_filament_string(int index, wxString& filament_str);
 
-    virtual int GetNumberRows() wxOVERRIDE;
-    virtual int GetNumberCols() wxOVERRIDE;
-    virtual bool IsEmptyCell( int row, int col ) wxOVERRIDE;
+    virtual int GetNumberRows() override;
+    virtual int GetNumberCols() override;
+    virtual bool IsEmptyCell( int row, int col ) override;
 
 
-    //virtual wxString GetColLabelValue( int col ) wxOVERRIDE;
+    //virtual wxString GetColLabelValue( int col ) override;
 
-    virtual wxString GetTypeName( int row, int col ) wxOVERRIDE;
-    virtual bool CanGetValueAs( int row, int col, const wxString& typeName ) wxOVERRIDE;
-    virtual bool CanSetValueAs( int row, int col, const wxString& typeName ) wxOVERRIDE;
+    virtual wxString GetTypeName( int row, int col ) override;
+    virtual bool CanGetValueAs( int row, int col, const wxString& typeName ) override;
+    virtual bool CanSetValueAs( int row, int col, const wxString& typeName ) override;
 
-    virtual wxString GetValue( int row, int col ) wxOVERRIDE;
-    virtual void SetValue( int row, int col, const wxString& value ) wxOVERRIDE;
+    virtual wxString GetValue( int row, int col ) override;
+    virtual void SetValue( int row, int col, const wxString& value ) override;
 
-    virtual long GetValueAsLong( int row, int col ) wxOVERRIDE;
-    virtual bool GetValueAsBool( int row, int col ) wxOVERRIDE;
-    virtual double GetValueAsDouble (int row, int col) wxOVERRIDE;
+    virtual long GetValueAsLong( int row, int col ) override;
+    virtual bool GetValueAsBool( int row, int col ) override;
+    virtual double GetValueAsDouble (int row, int col) override;
 
-    virtual void SetValueAsLong( int row, int col, long value ) wxOVERRIDE;
-    virtual void SetValueAsBool( int row, int col, bool value ) wxOVERRIDE;
-    virtual void SetValueAsDouble (int row, int col, double value) wxOVERRIDE;
+    virtual void SetValueAsLong( int row, int col, long value ) override;
+    virtual void SetValueAsBool( int row, int col, bool value ) override;
+    virtual void SetValueAsDouble (int row, int col, double value) override;
 
-    void SetColLabelValue( int col, const wxString& ) wxOVERRIDE;
-    wxString GetColLabelValue( int col ) wxOVERRIDE;
+    void SetColLabelValue( int col, const wxString& ) override;
+    wxString GetColLabelValue( int col ) override;
 
     template<typename TYPE> const TYPE* get_object_config_value(const DynamicPrintConfig& global_config, ModelConfig* obj_config, std::string& config_option)
     {

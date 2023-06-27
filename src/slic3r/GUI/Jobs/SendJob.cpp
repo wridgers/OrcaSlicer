@@ -6,6 +6,8 @@
 #include "slic3r/GUI/GUI.hpp"
 #include "slic3r/GUI/GUI_App.hpp"
 
+#include <boost/log/trivial.hpp>
+
 namespace Slic3r {
 namespace GUI {
 
@@ -121,8 +123,8 @@ void SendJob::process()
     std::string http_body;
 
 
-   
-   
+
+
     // local print access
     params.dev_ip = m_dev_ip;
     params.username = "bblp";
@@ -147,7 +149,7 @@ void SendJob::process()
         m_job_finished = true;
         return;
     }
-    
+
 
     /* display info */
     msg = _L("Sending gcode file over LAN");
@@ -293,7 +295,7 @@ void SendJob::process()
         else if (params.password.empty())
             params.comments = "no_password";
 
-        if (!params.password.empty() 
+        if (!params.password.empty()
             && !params.dev_ip.empty()
             && this->has_sdcard) {
             // try to send local with record
@@ -369,7 +371,7 @@ void SendJob::process()
         if (result == BAMBU_NETWORK_ERR_WRONG_IP_ADDRESS) {
             msg_text = timeout_to_upload_str;
         }
-            
+
         update_status(curr_percent, msg_text);
         BOOST_LOG_TRIVIAL(error) << "send_job: failed, result = " << result;
     } else {

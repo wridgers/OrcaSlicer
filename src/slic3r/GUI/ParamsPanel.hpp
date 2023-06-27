@@ -24,6 +24,7 @@
 #include <wx/statline.h>
 #include <wx/scrolwin.h>
 #include <wx/panel.h>
+#include <wx/timer.h>
 
 #include "wxExtensions.hpp"
 #include "GUI_Utils.hpp"

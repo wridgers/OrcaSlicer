@@ -3,7 +3,9 @@
 #include <cstddef>
 #include <vector>
 #include <string>
+
 #include <boost/algorithm/string.hpp>
+#include <boost/log/trivial.hpp>
 
 #include <wx/sizer.h>
 #include <wx/stattext.h>
@@ -15,6 +17,7 @@
 #include <wx/menu.h>
 #include <wx/odcombo.h>
 #include <wx/listbook.h>
+#include <wx/colourdata.h>
 
 #ifdef _WIN32
 #include <wx/msw/dcclient.h>

@@ -1,6 +1,7 @@
 #include "GCodeReader.hpp"
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
+#include <boost/log/trivial.hpp>
 #include <boost/nowide/fstream.hpp>
 #include <boost/nowide/cstdio.hpp>
 #include <fstream>
@@ -30,7 +31,7 @@ const char* GCodeReader::parse_line_internal(const char *ptr, const char *end, G
     PROFILE_FUNC();
 
     assert(is_decimal_separator_point());
-    
+
     // command and args
     const char *c = ptr;
     {
@@ -81,7 +82,7 @@ const char* GCodeReader::parse_line_internal(const char *ptr, const char *end, G
                 c = skip_word(c);
         }
     }
-    
+
     if (gline.has(E) && m_config.use_relative_e_distances)
         m_position[E] = 0;
 
@@ -162,7 +163,7 @@ bool GCodeReader::parse_file_raw_internal(const std::string &filename, ParseLine
             } else
                 gcode_line.insert(gcode_line.end(), it, it_end);
             // Skip EOL.
-            it = it_end; 
+            it = it_end;
             if (it != it_bufend && *it == '\r')
                 ++ it;
             if (it != it_bufend && *it == '\n') {
@@ -180,8 +181,8 @@ bool GCodeReader::parse_file_raw_internal(const std::string &filename, ParseLine
 template<typename ParseLineCallback, typename LineEndCallback>
 bool GCodeReader::parse_file_internal(const std::string &filename, ParseLineCallback parse_line_callback, LineEndCallback line_end_callback)
 {
-    GCodeLine gline;    
-    return this->parse_file_raw_internal(filename, 
+    GCodeLine gline;
+    return this->parse_file_raw_internal(filename,
         [this, &gline, parse_line_callback](const char *begin, const char *end) {
             gline.reset();
 
@@ -191,7 +192,7 @@ bool GCodeReader::parse_file_internal(const std::string &filename, ParseLineCall
                 begin_new = skip_word(begin_new);
             begin_new = skip_whitespaces(begin_new);
             this->parse_line(begin_new, end, gline, parse_line_callback);
-        }, 
+        },
         line_end_callback);
 }
 
@@ -217,7 +218,7 @@ bool GCodeReader::parse_file(const std::string &file, callback_t callback, std::
 bool GCodeReader::parse_file_raw(const std::string &filename, raw_line_callback_t line_callback)
 {
     return this->parse_file_raw_internal(filename,
-        [this, line_callback](const char *begin, const char *end) { line_callback(*this, begin, end); }, 
+        [this, line_callback](const char *begin, const char *end) { line_callback(*this, begin, end); },
         [](size_t){});
 }
 

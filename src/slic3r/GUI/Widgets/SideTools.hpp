@@ -4,6 +4,7 @@
 #include <wx/dcgraph.h>
 #include <wx/gdicmn.h>
 #include <wx/dcclient.h>
+#include <wx/timer.h>
 #include "../wxExtensions.hpp"
 
 #define SIDE_TOOLS_GREY900 wxColour(38, 46, 48)

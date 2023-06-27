@@ -11,6 +11,7 @@
 #include "Plater.hpp"
 
 #include <boost/algorithm/string.hpp>
+#include <boost/log/trivial.hpp>
 
 #include "I18N.hpp"
 #include "ConfigManipulation.hpp"
@@ -65,7 +66,7 @@ ObjectTableSettings::ObjectTableSettings(wxWindow* parent, ObjectGridTable* tabl
     OTG_Settings(parent, true), m_table(table)
 {
     m_og->activate();
-    //m_og->set_name(_(L("Per-Object Settings")));    
+    //m_og->set_name(_(L("Per-Object Settings")));
 
     m_settings_list_sizer = new wxBoxSizer(wxVERTICAL);
     m_og->sizer->Add(m_settings_list_sizer, 1, wxEXPAND | wxLEFT, 5);
@@ -171,14 +172,14 @@ bool ObjectTableSettings::update_settings_list(bool is_object, bool is_multiple_
             btn->SetBackgroundColour(parent->GetBackgroundColour());
             #endif // DEBUG
 
-            
+
             btn->SetBitmapFocus(m_bmp_reset_focus.bmp());
             btn->SetBitmapHover(m_bmp_reset_focus.bmp());
 
             #ifdef __WINDOWS__
             btn->SetBitmapDisabled(m_bmp_reset_disable.bmp());
             #endif
-            
+
             #ifdef __WXOSX_MAC__
             btn->Bind(EVT_LOCK_DISABLE, [this, btn](auto &e) { btn->SetBitmap(m_bmp_reset_disable.bmp()); });
             btn->Bind(EVT_LOCK_ENABLE, [this, btn](auto &e) { btn->SetBitmap(m_bmp_reset_focus.bmp()); });
@@ -191,7 +192,7 @@ bool ObjectTableSettings::update_settings_list(bool is_object, bool is_multiple_
                 wxGetApp().obj_list()->changed_object();
                 /*wxTheApp->CallAfter([this, is_object, object, config, category]() {
                     wxWindowUpdateLocker noUpdates(m_parent);
-                    update_settings_list(is_object, false, object, config, category); 
+                    update_settings_list(is_object, false, object, config, category);
                 });*/
                 this->m_parent->Freeze();
                 /* Check overriden options list after deleting.
@@ -235,9 +236,9 @@ bool ObjectTableSettings::update_settings_list(bool is_object, bool is_multiple_
             if (ctrl == nullptr)
                 return;
             ctrl->SetBitmap_(m_bmp_reset);
-            ctrl->SetBitmapFocus(m_bmp_reset_focus.bmp()); 
+            ctrl->SetBitmapFocus(m_bmp_reset_focus.bmp());
             ctrl->SetBitmapHover(m_bmp_reset_focus.bmp());
-            #ifdef __WINDOWS__  
+            #ifdef __WINDOWS__
             ctrl->SetBitmapDisabled(m_bmp_reset_disable.bmp());
             #endif
         };
@@ -514,5 +515,4 @@ void ObjectTableSettings::msw_rescale()
 }
 
 } //namespace GUI
-} //namespace Slic3r 
-
+} //namespace Slic3r

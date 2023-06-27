@@ -4,6 +4,8 @@
 #include "slic3r/GUI/GUI_App.hpp"
 #include "slic3r/Utils/Http.hpp"
 
+#include <boost/log/trivial.hpp>
+
 namespace Slic3r {
 namespace GUI {
 
@@ -68,7 +70,7 @@ void UpgradeNetworkJob::process()
         return was_canceled();
     };
     int curr_percent = 0;
-    result = wxGetApp().download_plugin(name, package_name, 
+    result = wxGetApp().download_plugin(name, package_name,
         [this, &curr_percent](int state, int percent, bool &cancel) {
             if (state == InstallStatusNormal) {
                 update_status(percent, _L("Downloading"));

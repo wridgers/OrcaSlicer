@@ -12,6 +12,7 @@
 #include <numeric>
 #include <unordered_set>
 #include <tbb/parallel_for.h>
+#include <boost/log/trivial.hpp>
 
 #ifndef NDEBUG
     // #define BRIM_DEBUG_TO_SVG

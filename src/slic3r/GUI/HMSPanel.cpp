@@ -5,6 +5,8 @@
 #include "GUI.hpp"
 #include "GUI_App.hpp"
 
+#include <boost/log/trivial.hpp>
+
 namespace Slic3r {
 namespace GUI {
 
@@ -12,7 +14,7 @@ namespace GUI {
 #define HMS_NOTIFY_ITEM_SIZE wxSize(-1, FromDIP(80))
 
 HMSNotifyItem::HMSNotifyItem(wxWindow *parent, HMSItem& item)
-    : wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL) 
+    : wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL)
     , m_hms_item(item)
     , m_url(get_hms_wiki_url(item.get_long_error_code()))
 {
@@ -130,19 +132,19 @@ void HMSNotifyItem::init_bitmaps() {
 wxBitmap & HMSNotifyItem::get_notify_bitmap()
 {
     switch (m_hms_item.msg_level) {
-        case (HMS_FATAL): 
+        case (HMS_FATAL):
             return m_img_notify_lv1;
             break;
         case (HMS_SERIOUS):
             return m_img_notify_lv2;
             break;
-        case (HMS_COMMON): 
+        case (HMS_COMMON):
             return m_img_notify_lv3;
             break;
-        case (HMS_INFO): 
+        case (HMS_INFO):
             //return m_img_notify_lv4;
             break;
-        case (HMS_UNKNOWN): 
+        case (HMS_UNKNOWN):
         case (HMS_MSG_LEVEL_MAX):
         default: break;
     }

@@ -17,6 +17,8 @@
 #include <wx/dataview.h>
 #include <wx/tglbtn.h>
 
+#include <boost/log/trivial.hpp>
+
 #include "wxExtensions.hpp"
 #include "GUI_App.hpp"
 #include "GUI_ObjectList.hpp"
@@ -416,12 +418,12 @@ void MonitorPanel::update_all()
     m_status_info_panel->obj = obj;
     m_upgrade_panel->update(obj);
 
-    
+
     m_status_info_panel->m_media_play_ctrl->SetMachineObject(obj);
     m_media_file_panel->SetMachineObject(obj);
 
     update_status(obj);
-    
+
     if (!obj) {
         show_status((int)MONITOR_NO_PRINTER);
         return;
@@ -479,7 +481,7 @@ bool MonitorPanel::Show(bool show)
             if (obj == nullptr) {
                 dev->load_last_machine();
                 obj = dev->get_selected_machine();
-                if (obj) 
+                if (obj)
                     GUI::wxGetApp().sidebar().load_ams_list(obj->dev_id, obj->amsList);
             } else {
                 obj->reset_update_time();

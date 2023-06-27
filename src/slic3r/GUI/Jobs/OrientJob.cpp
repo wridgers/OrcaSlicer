@@ -7,6 +7,7 @@
 #include "slic3r/GUI/NotificationManager.hpp"
 #include "libslic3r/PresetBundle.hpp"
 
+#include <boost/log/trivial.hpp>
 
 namespace Slic3r { namespace GUI {
 

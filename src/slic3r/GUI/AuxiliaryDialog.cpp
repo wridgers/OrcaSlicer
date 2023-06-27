@@ -4,10 +4,12 @@
 
 #include "libslic3r/Utils.hpp"
 
+#include <boost/property_tree/json_parser.hpp>
+
 namespace pt = boost::property_tree;
 typedef pt::ptree JSON;
 
-namespace Slic3r { 
+namespace Slic3r {
 namespace GUI {
 
 

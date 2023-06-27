@@ -2,6 +2,7 @@
 #include "Label.hpp"
 #include "StateColor.hpp"
 
+#include <wx/dcclient.h>
 #include <wx/dcgraph.h>
 
 BEGIN_EVENT_TABLE(StaticLine, wxWindow)
@@ -32,7 +33,7 @@ void StaticLine::SetLabel(const wxString& label)
 
 void StaticLine::SetIcon(const wxString &icon)
 {
-    this->icon = icon.IsEmpty() ? ScalableBitmap() 
+    this->icon = icon.IsEmpty() ? ScalableBitmap()
         : ScalableBitmap(this, icon.ToStdString(), 18);
     messureSize();
     Refresh();

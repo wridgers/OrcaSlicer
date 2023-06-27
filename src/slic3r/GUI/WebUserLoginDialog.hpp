@@ -26,6 +26,7 @@
 #include <wx/frame.h>
 #include <wx/tbarbase.h>
 #include "wx/textctrl.h"
+#include <wx/timer.h>
 
 namespace Slic3r { namespace GUI {
 
@@ -87,4 +88,4 @@ private:
 
 }} // namespace Slic3r::GUI
 
-#endif 
+#endif

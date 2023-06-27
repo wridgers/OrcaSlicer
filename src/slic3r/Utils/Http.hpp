@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <functional>
+#include <map>
 #include <boost/filesystem/path.hpp>
 
 #define MAX_SIZE_TO_FILE    3*1024

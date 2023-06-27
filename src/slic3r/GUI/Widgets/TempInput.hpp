@@ -3,6 +3,7 @@
 
 #include "../wxExtensions.hpp"
 #include <wx/textctrl.h>
+#include <wx/stattext.h>
 #include "StaticBox.hpp"
 
 wxDECLARE_EVENT(wxCUSTOMEVT_SET_TEMP_FINISH, wxCommandEvent);
@@ -59,12 +60,12 @@ public:
                 const wxSize & size        = wxDefaultSize,
                 long           style       = 0);
 
-	
+
     wxPopupTransientWindow *wdialog{nullptr};
     int  temp_type;
     bool actice = false;
 
-    
+
     wxString erasePending(wxString &str);
 
     void SetTagTemp(int temp);
@@ -72,7 +73,7 @@ public:
 
     void SetCurrTemp(int temp);
     void SetCurrTemp(wxString temp);
-   
+
     bool AllisNum(std::string str);
     void SetFinish();
     void Warning(bool warn, WarningType type = WARNING_UNKNOWN);

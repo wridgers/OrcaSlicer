@@ -18,16 +18,16 @@ public:
 	void Rescale();
 
 #ifdef __WXOSX__
-    virtual bool Enable(bool enable = true) wxOVERRIDE;
+    virtual bool Enable(bool enable = true) override;
 #endif
 
 protected:
 #ifdef __WXMSW__
-    virtual State GetNormalState() const wxOVERRIDE;
+    virtual State GetNormalState() const override;
 #endif
     
 #ifdef __WXOSX__
-    virtual wxBitmap DoGetBitmap(State which) const wxOVERRIDE;
+    virtual wxBitmap DoGetBitmap(State which) const override;
     
     void updateBitmap(wxEvent & evt);
     

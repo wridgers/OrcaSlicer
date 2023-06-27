@@ -3,6 +3,8 @@
 #include <cmath>
 #include <cassert>
 
+#include "Polyline.hpp"
+
 namespace Slic3r {
 
 void ArcFitter::do_arc_fitting(const Points& points, std::vector<PathFittingData>& result, double tolerance)

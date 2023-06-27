@@ -16,6 +16,8 @@
 
 #include "libnest2d/common.hpp"
 
+#include <boost/log/trivial.hpp>
+
 #define SAVE_ARRANGE_POLY 0
 
 namespace Slic3r { namespace GUI {
@@ -270,7 +272,7 @@ void ArrangeJob::prepare_wipe_tower()
             break;
         }
     }
-     
+
     // if multile extruders have same bed temp, we need wipe tower
     // 允许不同材料落在相同盘，且所有选定对象中使用了多种热床温度相同的材料
      if (params.allow_multi_materials_on_same_plate) {
@@ -515,7 +517,7 @@ void ArrangeJob::process()
 
     if (params.avoid_extrusion_cali_region && print.full_print_config().opt_bool("scan_first_layer"))
         partplate_list.preprocess_nonprefered_areas(m_unselected, MAX_NUM_PLATES);
-        
+
     double skirt_distance = print.has_skirt() ? print.config().skirt_distance.value : 0;
     double brim_max = 0;
     std::for_each(m_selected.begin(), m_selected.end(), [&](ArrangePolygon ap) {  brim_max = std::max(brim_max, ap.brim_width); });

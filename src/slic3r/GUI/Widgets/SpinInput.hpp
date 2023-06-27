@@ -2,6 +2,8 @@
 #define slic3r_GUI_SpinInput_hpp_
 
 #include <wx/textctrl.h>
+#include <wx/timer.h>
+
 #include "StaticBox.hpp"
 
 class Button;
@@ -47,7 +49,7 @@ public:
 
     void SetCornerRadius(double radius);
 
-    void SetLabel(const wxString &label) wxOVERRIDE;
+    void SetLabel(const wxString &label) override;
 
     void SetLabelColor(StateColor const &color);
 
@@ -57,7 +59,7 @@ public:
 
     void Rescale();
 
-    virtual bool Enable(bool enable = true) wxOVERRIDE;
+    virtual bool Enable(bool enable = true) override;
 
     wxTextCtrl * GetTextCtrl() { return text_ctrl; }
 

@@ -21,10 +21,10 @@ public:
     virtual ~SliceInfoPopup() {}
 
     // PopupWindow virtual methods are all overridden to log them
-    virtual void Popup(wxWindow *focus = NULL) wxOVERRIDE;
-    virtual void OnDismiss() wxOVERRIDE;
-    virtual bool ProcessLeftDown(wxMouseEvent &event) wxOVERRIDE;
-    virtual bool Show(bool show = true) wxOVERRIDE;
+    virtual void Popup(wxWindow *focus = NULL) override;
+    virtual void OnDismiss() override;
+    virtual bool ProcessLeftDown(wxMouseEvent &event) override;
+    virtual bool Show(bool show = true) override;
 
 private:
     wxScrolledWindow *m_panel;

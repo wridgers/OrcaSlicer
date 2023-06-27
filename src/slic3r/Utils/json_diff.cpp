@@ -7,6 +7,8 @@
 #include <thread>
 #include <functional>
 
+#include <boost/log/trivial.hpp>
+
 #include <stdio.h>
 #include "nlohmann/json.hpp"
 using namespace std;

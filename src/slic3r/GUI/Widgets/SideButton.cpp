@@ -1,6 +1,7 @@
 #include "SideButton.hpp"
 #include "Label.hpp"
 
+#include <wx/dcclient.h>
 #include <wx/dcgraph.h>
 
 BEGIN_EVENT_TABLE(SideButton, wxPanel)
@@ -21,10 +22,10 @@ SideButton::SideButton(wxWindow* parent, wxString text, wxString icon, long stly
     extra_size = wxSize(38, 10);
     text_margin = 15;
 #endif
-    
+
     icon_offset = 0;
     text_orientation = HO_Left;
-    
+
 
 
     border_color.append(0x6B6B6B, StateColor::Disabled);
@@ -205,7 +206,7 @@ void SideButton::dorender(wxDC& dc, wxDC& text_dc)
     dc.SetPen(wxPen(border_color.colorForStates(states)));
     int pen_width = dc.GetPen().GetWidth();
 
-    
+
     // draw icon style
     if (icon.bmp().IsOk()) {
         if (radius > 1e-5) {

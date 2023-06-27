@@ -28,12 +28,14 @@
 #include "BRepPrimAPI_MakePrism.hxx"
 #include "Font_FontMgr.hxx"
 
+#include <boost/log/trivial.hpp>
+
 namespace Slic3r {
 
 static std::map<std::string, std::string> g_occt_fonts_maps; //map<font_name, font_path>
 
-static const std::vector<Standard_CString> fonts_suffix{ "Bold",  "Medium", "Heavy", "Italic", "Oblique", "Inclined", "Light", "Thin", 
-"Semibold", "ExtraBold", "ExtraBold",  "Semilight", "SemiLight", "ExtraLight", "Extralight",  "Ultralight", 
+static const std::vector<Standard_CString> fonts_suffix{ "Bold",  "Medium", "Heavy", "Italic", "Oblique", "Inclined", "Light", "Thin",
+"Semibold", "ExtraBold", "ExtraBold",  "Semilight", "SemiLight", "ExtraLight", "Extralight",  "Ultralight",
 "Condensed", "Ultra", "Extra", "Expanded", "Extended", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Al Tarikh"};
 
 std::map<std::string, std::string> get_occt_fonts_maps()

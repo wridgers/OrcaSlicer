@@ -20,6 +20,8 @@
 #include <algorithm>
 #include "BitmapCache.hpp"
 
+#include <boost/log/trivial.hpp>
+
 namespace Slic3r {
 namespace GUI {
 
@@ -185,7 +187,7 @@ SendToPrinterDialog::SendToPrinterDialog(Plater *plater)
     m_line_top->SetBackgroundColour(wxColour(166, 169, 170));
 
     m_scrollable_region       = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
-    m_sizer_scrollable_region = new wxBoxSizer(wxVERTICAL); 
+    m_sizer_scrollable_region = new wxBoxSizer(wxVERTICAL);
 
     m_panel_image = new wxPanel(m_scrollable_region, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
     m_panel_image->SetBackgroundColour(m_colour_def_color);
@@ -471,7 +473,7 @@ void SendToPrinterDialog::prepare(int print_plate_idx)
     m_print_plate_idx = print_plate_idx;
 }
 
-void SendToPrinterDialog::update_priner_status_msg(wxString msg, bool is_warning) 
+void SendToPrinterDialog::update_priner_status_msg(wxString msg, bool is_warning)
 {
     auto colour = is_warning ? wxColour(0xFF, 0x6F, 0x00) : wxColour(0x6B, 0x6B, 0x6B);
     m_statictext_printer_msg->SetForegroundColour(colour);
@@ -558,7 +560,7 @@ void SendToPrinterDialog::on_cancel(wxCloseEvent &event)
     }
     this->EndModal(wxID_CANCEL);
 }
- 
+
 void SendToPrinterDialog::on_ok(wxCommandEvent &event)
 {
     BOOST_LOG_TRIVIAL(info) << "print_job: on_ok to send";
@@ -576,7 +578,7 @@ void SendToPrinterDialog::on_ok(wxCommandEvent &event)
     if (!dev) return;
 
     MachineObject *obj_ = dev->get_selected_machine();
-    
+
     if (obj_ == nullptr) {
         m_printer_last_select = "";
         m_comboBox_printer->SetTextLabel("");
@@ -653,7 +655,7 @@ void SendToPrinterDialog::on_ok(wxCommandEvent &event)
 		fs::path default_output_file_path = boost::filesystem::path(default_output_file.c_str());
 		file_name = default_output_file_path.filename().string();
     }*/
-    
+
 
 
     m_send_job                      = std::make_shared<SendJob>(m_status_bar, m_plater, m_printer_last_select);
@@ -954,7 +956,7 @@ void SendToPrinterDialog::update_show_status()
         show_status(PrintDialogStatus::PrintStatusNotOnTheSameLAN);
         return;
     }
-    
+
     show_status(PrintDialogStatus::PrintStatusReadingFinished);
 }
 
@@ -1140,7 +1142,7 @@ void SendToPrinterDialog::set_default()
     m_comboBox_printer->Enable();
     // rset status bar
     m_status_bar->reset();
-    
+
     NetworkAgent* agent = wxGetApp().getAgent();
     if (agent) {
         if (agent->is_user_login()) {
@@ -1167,7 +1169,7 @@ void SendToPrinterDialog::set_default()
         image  = image.Rescale(FromDIP(256), FromDIP(256));
         m_thumbnailPanel->set_thumbnail(image);
     }
-    
+
     std::vector<std::string> materials;
     std::vector<std::string> display_materials;
     {
@@ -1189,7 +1191,7 @@ void SendToPrinterDialog::set_default()
     Layout();
     Fit();
 
-  
+
     wxSize screenSize = wxGetDisplaySize();
     auto dialogSize = this->GetSize();
 

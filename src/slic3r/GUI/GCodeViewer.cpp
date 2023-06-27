@@ -23,6 +23,7 @@
 #include "GUI_Preview.hpp"
 #include "libslic3r/Print.hpp"
 #include "libslic3r/Layer.hpp"
+#include "libslic3r/ClipperUtils.cpp"
 #include "Widgets/ProgressDialog.hpp"
 
 #include <imgui/imgui_internal.h>
@@ -487,7 +488,7 @@ void GCodeViewer::SequentialView::Marker::render(int canvas_width, int canvas_he
         sprintf(buf, "%s%.3f", z.c_str(), position.z());
         ImGui::PushItemWidth(item_size);
         imgui.text(buf);
-        
+
         ImGui::SameLine(window_padding + item_size + item_spacing);
         sprintf(buf, "%s%.0f", speed.c_str(), m_curr_move.feedrate);
         ImGui::PushItemWidth(item_size);
@@ -1174,7 +1175,7 @@ void GCodeViewer::refresh(const GCodeProcessorResult& gcode_result, const std::v
             m_extrusions.ranges.temperature.update_from(curr.temperature);
             if (curr.extrusion_role != erCustom || is_visible(erCustom))
                 m_extrusions.ranges.volumetric_rate.update_from(round_to_bin(curr.volumetric_rate()));
-            
+
             if (curr.layer_duration > 0.f) {
                 m_extrusions.ranges.layer_duration.update_from(curr.layer_duration);
                 m_extrusions.ranges.layer_duration_log.update_from(curr.layer_duration);

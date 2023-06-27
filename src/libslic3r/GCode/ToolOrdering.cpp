@@ -1,6 +1,7 @@
 #include "Print.hpp"
 #include "ToolOrdering.hpp"
 #include "Layer.hpp"
+#include "../ClipperUtils.hpp"
 
 // #define SLIC3R_DEBUG
 
@@ -237,7 +238,7 @@ std::vector<unsigned int> ToolOrdering::generate_first_layer_tool_order(const Pr
         auto first_layer = object->get_layer(0);
         for (auto layerm : first_layer->regions()) {
             int extruder_id = layerm->region().config().option("wall_filament")->getInt();
-            
+
             for (auto expoly : layerm->raw_slices) {
                 if (offset_ex(expoly, -0.2 * scale_(print.config().initial_layer_line_width)).empty())
                     continue;
@@ -354,7 +355,7 @@ void ToolOrdering::collect_extruders(const PrintObject &object, const std::vecto
     for (auto layer : object.layers()) {
         LayerTools &layer_tools = this->tools_for_layer(layer->print_z);
 
-        // Override extruder with the next 
+        // Override extruder with the next
     	for (; it_per_layer_extruder_override != per_layer_extruder_switches.end() && it_per_layer_extruder_override->first < layer->print_z + EPSILON; ++ it_per_layer_extruder_override)
     		extruder_override = (int)it_per_layer_extruder_override->second;
 
@@ -812,8 +813,8 @@ void ToolOrdering::assign_custom_gcodes(const Print &print)
 			bool apply_color_change = ! ignore_tool_and_color_changes &&
 				// If it is color change, it will actually be useful as the exturder above will print.
                 // BBS
-				(color_change ? 
-					mode == CustomGCode::SingleExtruder || 
+				(color_change ?
+					mode == CustomGCode::SingleExtruder ||
 						(custom_gcode.extruder <= int(num_filaments) && extruder_printing_above[unsigned(custom_gcode.extruder - 1)]) :
 				 	tool_change && tool_changes_as_color_changes);
 			if (pause_or_custom_gcode || apply_color_change)

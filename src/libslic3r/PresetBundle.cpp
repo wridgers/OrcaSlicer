@@ -19,6 +19,7 @@
 #include <boost/nowide/fstream.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/locale.hpp>
 #include <boost/log/trivial.hpp>
 

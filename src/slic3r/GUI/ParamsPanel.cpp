@@ -18,6 +18,8 @@
 #include "Widgets/Button.hpp"
 #include "GUI_Factories.hpp"
 
+#include <boost/log/trivial.hpp>
+#include <wx/wupdlock.h>
 
 namespace Slic3r {
 namespace GUI {

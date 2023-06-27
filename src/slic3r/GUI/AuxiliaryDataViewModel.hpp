@@ -8,7 +8,7 @@
 
 #include "I18N.hpp"
 
-#include <filesystem>
+#include <boost/filesystem.hpp>
 
 class AuxiliaryModelNode;
 WX_DEFINE_ARRAY_PTR(AuxiliaryModelNode*, AuxiliaryModelNodePtrArray);
@@ -119,32 +119,32 @@ public:
     // override sorting to always sort branches ascendingly
 
     int Compare(const wxDataViewItem& item1, const wxDataViewItem& item2,
-        unsigned int column, bool ascending) const wxOVERRIDE;
+        unsigned int column, bool ascending) const override;
 
     // implementation of base class virtuals to define model
 
-    virtual unsigned int GetColumnCount() const wxOVERRIDE
+    virtual unsigned int GetColumnCount() const override
     {
         return 1;
     }
 
-    virtual wxString GetColumnType(unsigned int col) const wxOVERRIDE
+    virtual wxString GetColumnType(unsigned int col) const override
     {
         return "string";
     }
 
     virtual void GetValue(wxVariant& variant,
-        const wxDataViewItem& item, unsigned int col) const wxOVERRIDE;
+        const wxDataViewItem& item, unsigned int col) const override;
     virtual bool SetValue(const wxVariant& variant,
-        const wxDataViewItem& item, unsigned int col) wxOVERRIDE;
+        const wxDataViewItem& item, unsigned int col) override;
 
     virtual bool IsEnabled(const wxDataViewItem& item,
-        unsigned int col) const wxOVERRIDE;
+        unsigned int col) const override;
 
-    virtual wxDataViewItem GetParent(const wxDataViewItem& item) const wxOVERRIDE;
-    virtual bool IsContainer(const wxDataViewItem& item) const wxOVERRIDE;
+    virtual wxDataViewItem GetParent(const wxDataViewItem& item) const override;
+    virtual bool IsContainer(const wxDataViewItem& item) const override;
     virtual unsigned int GetChildren(const wxDataViewItem& parent,
-        wxDataViewItemArray& array) const wxOVERRIDE;
+        wxDataViewItemArray& array) const override;
 
 private:
     AuxiliaryModelNode* m_root;
@@ -152,4 +152,3 @@ private:
 };
 
 #endif // slic3r_GUI_AuxiliaryDataViewModel_hpp_
-

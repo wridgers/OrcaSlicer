@@ -11,6 +11,7 @@
 #include <wx/gbsizer.h>
 #include <wx/webrequest.h>
 #include <wx/hyperlink.h>
+#include <wx/timer.h>
 #include "Widgets/SwitchButton.hpp"
 #include "Widgets/RadioBox.hpp"
 #include "Widgets/PopupWindow.hpp"
@@ -28,10 +29,10 @@ public:
     virtual ~CameraPopup() {}
 
     // PopupWindow virtual methods are all overridden to log them
-    virtual void Popup(wxWindow *focus = NULL) wxOVERRIDE;
-    virtual void OnDismiss() wxOVERRIDE;
-    virtual bool ProcessLeftDown(wxMouseEvent &event) wxOVERRIDE;
-    virtual bool Show(bool show = true) wxOVERRIDE;
+    virtual void Popup(wxWindow *focus = NULL) override;
+    virtual void OnDismiss() override;
+    virtual bool ProcessLeftDown(wxMouseEvent &event) override;
+    virtual bool Show(bool show = true) override;
 
     void sync_vcamera_state(bool show_vcamera);
     void check_func_supported();

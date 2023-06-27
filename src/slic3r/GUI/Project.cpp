@@ -4,6 +4,8 @@
 #include "libslic3r/Model.hpp"
 #include "libslic3r/Format/bbs_3mf.hpp"
 
+#include <boost/log/trivial.hpp>
+
 #include <wx/app.h>
 #include <wx/button.h>
 #include <wx/scrolwin.h>
@@ -20,6 +22,7 @@
 #include <wx/tokenzr.h>
 #include <wx/arrstr.h>
 #include <wx/tglbtn.h>
+#include <wx/mstream.h>
 
 #include "wxExtensions.hpp"
 #include "GUI_App.hpp"
@@ -162,7 +165,7 @@ void ProjectPanel::on_reload(wxCommandEvent& evt)
     }
 }
 
-void ProjectPanel::msw_rescale() 
+void ProjectPanel::msw_rescale()
 {
 }
 
@@ -219,7 +222,7 @@ void ProjectPanel::update_model_data()
     //basics info
     if (model.model_info == nullptr)
         return;
-    
+
     auto event = wxCommandEvent(EVT_PROJECT_RELOAD);
     event.SetEventObject(this);
     wxPostEvent(this, event);
@@ -299,12 +302,12 @@ std::map<std::string, std::vector<json>> ProjectPanel::Reload(wxString aux_path)
             for (auto folder : s_default_folders) {
                 auto idx = file_path.find(folder.ToStdString());
                 if (idx != std::string::npos) {
-                    
+
                     wxStructStat strucStat;
                     wxString file_name = encode_path(file_path.c_str());
                     wxStat(file_name, &strucStat);
                     wxFileOffset filelen = strucStat.st_size;
-     
+
                     pfile_obj["filename"] = wxGetApp().url_encode(file_path_obj.filename().string().c_str());
                     pfile_obj["size"] = formatBytes((unsigned long)filelen);
 
@@ -339,7 +342,7 @@ std::string ProjectPanel::formatBytes(unsigned long bytes)
     return wxString::Format("%.2fMB", dValidData).ToStdString();
 }
 
-wxString ProjectPanel::to_base64(std::string file_path) 
+wxString ProjectPanel::to_base64(std::string file_path)
 {
     std::map<std::string, wxBitmapType> base64_format;
     base64_format[".jpg"] = wxBITMAP_TYPE_JPEG;
@@ -370,10 +373,10 @@ void ProjectPanel::RunScript(std::string content)
     WebView::RunScript(m_browser, content);
 }
 
-bool ProjectPanel::Show(bool show) 
+bool ProjectPanel::Show(bool show)
 {
     if (show) update_model_data();
-    return wxPanel::Show(show); 
+    return wxPanel::Show(show);
 }
 
 }} // namespace Slic3r::GUI

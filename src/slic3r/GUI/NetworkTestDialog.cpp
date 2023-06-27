@@ -7,7 +7,9 @@
 #include "I18N.hpp"
 #include "slic3r/Utils/Http.hpp"
 #include "libslic3r/AppConfig.hpp"
+
 #include <boost/asio/ip/address.hpp>
+#include <boost/log/trivial.hpp>
 
 
 namespace Slic3r {
@@ -817,5 +819,3 @@ void NetworkTestDialog::update_status(int job_id, wxString info)
 
 } // namespace GUI
 } // namespace Slic3r
-
-

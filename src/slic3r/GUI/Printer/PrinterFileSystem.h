@@ -4,7 +4,9 @@
 #define BAMBU_DYNAMIC
 #include "BambuTunnel.h"
 
+#include <wx/bitmap.h>
 #include <wx/event.h>
+#include <wx/mstream.h>
 
 #include <boost/thread.hpp>
 #include <boost/enable_shared_from_this.hpp>
@@ -31,7 +33,7 @@ class PrinterFileSystem : public wxEvtHandler, public boost::enable_shared_from_
         THUMBNAIL       = 0x0002,
         FILE_DEL        = 0x0003,
         FILE_DOWNLOAD   = 0X0004,
-        NOTIFY_FIRST    = 0x0100, 
+        NOTIFY_FIRST    = 0x0100,
         LIST_CHANGE_NOTIFY = 0x0100,
         LIST_RESYNC_NOTIFY = 0x0101,
         TASK_CANCEL     = 0x1000
@@ -137,7 +139,7 @@ public:
     size_t GetIndexAtTime(boost::uint32_t time);
 
     void ToggleSelect(size_t index);
-    
+
     void SelectAll(bool select);
 
     size_t GetSelectCount() const;
@@ -150,12 +152,12 @@ public:
 
     enum Status {
         Initializing,
-        Connecting, 
+        Connecting,
         ListSyncing,
         ListReady,
         Failed,
     };
-    
+
     Status GetStatus() const { return m_status; }
     int GetLastError() const { return m_last_error; }
 

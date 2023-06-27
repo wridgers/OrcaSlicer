@@ -1,6 +1,7 @@
 #include "PrintConfig.hpp"
 #include "Config.hpp"
 #include "I18N.hpp"
+#include "ClipperUtils.hpp"
 
 #include <set>
 #include <boost/algorithm/string/replace.hpp>
@@ -734,7 +735,7 @@ void PrintConfigDef::init_fff_params()
     def->category = L("Quality");
     def->tooltip = L("Improve shell precision by adjusting outer wall spacing. This also improves layer consistency.");
     def->set_default_value(new ConfigOptionBool{false});
-    
+
     def = this->add("only_one_wall_top", coBool);
     def->label = L("Only one wall on top surfaces");
     def->category = L("Quality");
@@ -1482,7 +1483,7 @@ void PrintConfigDef::init_fff_params()
     def->enum_labels.push_back(L("1000 (unlimited)"));
     def->mode = comAdvanced;
     def->set_default_value(new ConfigOptionFloatOrPercent(20, false));
-    
+
     def = this->add("outer_wall_acceleration", coFloat);
     def->label = L("Outer wall");
     def->tooltip = L("Acceleration of outer walls");
@@ -1563,7 +1564,7 @@ void PrintConfigDef::init_fff_params()
     def->tooltip = L("Klipper's max_accel_to_decel will be adjusted automatically");
     def->mode = comAdvanced;
     def->set_default_value(new ConfigOptionBool(false));
-    
+
     def = this->add("accel_to_decel_factor", coPercent);
     def->label = L("accel_to_decel");
     def->tooltip = L("Klipper's max_accel_to_decel will be adjusted to this % of acceleration");
@@ -1572,7 +1573,7 @@ void PrintConfigDef::init_fff_params()
     def->max = 100;
     def->mode = comAdvanced;
     def->set_default_value(new ConfigOptionPercent(50));
-    
+
     def = this->add("default_jerk", coFloat);
     def->label = L("Default");
     def->tooltip = L("Default");
@@ -1708,7 +1709,7 @@ void PrintConfigDef::init_fff_params()
     def->max = 1000;
     def->mode = comAdvanced;
     def->set_default_value(new ConfigOptionInts { 0 });
-    
+
     def = this->add("support_material_interface_fan_speed", coInts);
     def->label = L("Support interface fan speed");
     def->tooltip = L("This fan speed is enforced during all support interfaces, to be able to weaken their bonding with a high fan speed."
@@ -1719,7 +1720,7 @@ void PrintConfigDef::init_fff_params()
     def->max = 100;
     def->mode = comAdvanced;
     def->set_default_value(new ConfigOptionInts{ -1 });
-    
+
 
     def = this->add("fuzzy_skin", coEnum);
     def->label = L("Fuzzy Skin");
@@ -1764,7 +1765,7 @@ void PrintConfigDef::init_fff_params()
     def->tooltip = L("Filter out gaps smaller than the threshold specified. This setting won't affact top/bottom layers");
     def->mode = comAdvanced;
     def->set_default_value(new ConfigOptionFloat(0));
-    
+
     def = this->add("gap_infill_speed", coFloat);
     def->label = L("Gap infill");
     def->category = L("Speed");
@@ -1916,7 +1917,7 @@ void PrintConfigDef::init_fff_params()
                    "slow down.");
     def->mode = comAdvanced;
     def->set_default_value(new ConfigOptionBool(0));
-    
+
     //BBS
     def = this->add("infill_combination", coBool);
     def->label = L("Infill combination");
@@ -2306,7 +2307,7 @@ void PrintConfigDef::init_fff_params()
     def->mode = comAdvanced;
     def->cli = ConfigOptionDef::nocli;
     def->set_default_value(new ConfigOptionEnum<PrintHostType>(htOctoPrint));
-    
+
 
     def = this->add("nozzle_volume", coFloat);
     def->label = L("Nozzle volume");
@@ -2392,7 +2393,7 @@ void PrintConfigDef::init_fff_params()
     def->min = 0;
     def->max = 1000;
     def->set_default_value(new ConfigOptionInt(2));
-    
+
     def = this->add("post_process", coStrings);
     def->label = L("Post-processing Scripts");
     def->tooltip = L("If you want to process the output G-code through custom scripts, "
@@ -2405,7 +2406,7 @@ void PrintConfigDef::init_fff_params()
     def->height = 6;
     def->mode = comAdvanced;
     def->set_default_value(new ConfigOptionStrings());
-    
+
     def = this->add("printer_model", coString);
     //def->label = L("Printer type");
     //def->tooltip = L("Type of the printer");
@@ -2613,7 +2614,7 @@ void PrintConfigDef::init_fff_params()
     def->enum_labels.push_back(L("Random"));
     def->mode = comSimple;
     def->set_default_value(new ConfigOptionEnum<SeamPosition>(spAligned));
-    
+
     def = this->add("seam_gap", coFloatOrPercent);
     def->label = L("Seam gap");
     def->tooltip = L("In order to reduce the visibility of the seam in a closed loop extrusion, the loop is interrupted and shortened by a specified amount.\n"
@@ -2629,7 +2630,7 @@ void PrintConfigDef::init_fff_params()
                      "e.g. if a wipe action is executed immediately following an outer wall extrusion, the speed of the outer wall extrusion will be utilized for the wipe action.");
     def->mode = comAdvanced;
     def->set_default_value(new ConfigOptionBool(true));
-    
+
     def = this->add("wipe_on_loops", coBool);
     def->label = L("Wipe on loops");
     def->tooltip = L("To minimize the visibility of the seam in a closed loop extrusion, a small inward movement is executed before the extruder leaves the loop.");
@@ -2646,7 +2647,7 @@ void PrintConfigDef::init_fff_params()
     def->min = 0;
     def->mode = comAdvanced;
     def->set_default_value(new ConfigOptionFloatOrPercent(80,true));
-    
+
     def = this->add("skirt_distance", coFloat);
     def->label = L("Skirt distance");
     def->tooltip = L("Distance from skirt to brim or object");
@@ -3166,13 +3167,13 @@ void PrintConfigDef::init_fff_params()
     def->category = L("Quality");
     def->tooltip = L("Enabling this option means the height of  tree support layer except the first will be automatically calculated ");
     def->set_default_value(new ConfigOptionBool(1));
-    
+
     def = this->add("tree_support_auto_brim", coBool);
     def->label = L("Auto brim width");
     def->category = L("Quality");
     def->tooltip = L("Enabling this option means the width of the brim for tree support will be automatically calculated");
     def->set_default_value(new ConfigOptionBool(1));
-    
+
     def = this->add("tree_support_brim_width", coFloat);
     def->label = L("Tree support brim width");
     def->category = L("Quality");
@@ -4834,7 +4835,7 @@ std::map<std::string, std::string> validate(const FullPrintConfig &cfg, bool und
         for (unsigned char wipe : cfg.wipe.values)
              if (wipe)
                 error_message.emplace("use_firmware_retraction", "--use-firmware-retraction is not compatible with --wipe");
-                
+
     // --gcode-flavor
     if (! print_config_def.get("gcode_flavor")->has_enum_value(cfg.gcode_flavor.serialize())) {
         error_message.emplace("gcode_flavor", L("invalid value ") + cfg.gcode_flavor.serialize());

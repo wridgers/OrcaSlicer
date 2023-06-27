@@ -4,6 +4,7 @@
 #include "wx/dialog.h"
 #include "wx/weakref.h"
 #include "wx/simplebook.h"
+#include "wx/progdlg.h"
 #include "Button.hpp"
 #include "../wxExtensions.hpp"
 
@@ -52,9 +53,9 @@ public:
     virtual bool WasSkipped() const;
 
     // Must provide overload to avoid hiding it (and warnings about it)
-    virtual void Update() wxOVERRIDE { wxDialog::Update(); }
+    virtual void Update() override { wxDialog::Update(); }
 
-    virtual bool Show(bool show = true) wxOVERRIDE;
+    virtual bool Show(bool show = true) override;
 
     // This enum is an implementation detail and should not be used
     // by user code.

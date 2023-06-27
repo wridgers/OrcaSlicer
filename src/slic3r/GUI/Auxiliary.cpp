@@ -4,6 +4,8 @@
 #include "libslic3r/Model.hpp"
 #include "libslic3r/Format/bbs_3mf.hpp"
 
+#include <boost/log/trivial.hpp>
+
 #include <wx/app.h>
 #include <wx/button.h>
 #include <wx/scrolwin.h>
@@ -64,7 +66,7 @@ AuFile::AuFile(wxWindow *parent, fs::path file_path, wxString file_name, Auxilia
         //constrain
         auto size = wxSize(0, 0);
         float proportion = float(image->GetSize().x) / float(image->GetSize().y);
-        if (proportion >= 1) { 
+        if (proportion >= 1) {
             size.x = AUFILE_PICTURES_SIZE.x;
             size.y = AUFILE_PICTURES_SIZE.x / proportion;
         } else {
@@ -86,11 +88,11 @@ AuFile::AuFile(wxWindow *parent, fs::path file_path, wxString file_name, Auxilia
             }
 
             if (m_file_path.extension() == ".pdf") { m_file_bitmap = m_bitmap_pdf; }
-            
+
         }
         if (m_type == ASSEMBLY_GUIDE) {m_file_bitmap = m_bitmap_pdf;}
     }
-    
+
     m_add_file = _L("Add File");
     cover_text_left  = _L("Set as cover");
     cover_text_right = _L("Rename");
@@ -99,11 +101,11 @@ AuFile::AuFile(wxWindow *parent, fs::path file_path, wxString file_name, Auxilia
     m_file_cover     = ScalableBitmap(this, "auxiliary_cover", 40);
     m_file_edit_mask = ScalableBitmap(this, "auxiliary_edit_mask", 30);
     m_file_delete    = ScalableBitmap(this, "auxiliary_delete", 20);
-    
+
 
     auto m_text_panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxSize(panel_size.x, AUFILE_TEXT_HEIGHT), wxTAB_TRAVERSAL);
     m_text_panel->SetBackgroundColour(StateColor::darkModeColorFor(AUFILE_GREY300));
-    
+
 
     wxBoxSizer *m_text_sizer = new wxBoxSizer(wxHORIZONTAL);
     m_text_name              = new wxStaticText(m_text_panel, wxID_ANY, m_file_name, wxDefaultPosition, wxSize(panel_size.x, -1), wxST_ELLIPSIZE_END);
@@ -257,7 +259,7 @@ void AuFile::PaintForeground(wxDC &dc)
         }
 
         if (m_type == MODEL_PICTURE) {
-            dc.DrawBitmap(m_file_edit_mask.bmp(), 0, size.y - m_file_edit_mask.GetBmpSize().y); 
+            dc.DrawBitmap(m_file_edit_mask.bmp(), 0, size.y - m_file_edit_mask.GetBmpSize().y);
         }
 
 
@@ -292,7 +294,7 @@ void AuFile::PaintForeground(wxDC &dc)
             pos.x      = (size.x - sizet.x) / 2;
             pos.y      = (size.y - (m_file_edit_mask.GetBmpSize().y + sizet.y) / 2);
             dc.DrawText(cover_text_right, pos);*/
-        }       
+        }
     }
 
     if (m_cover) {
@@ -347,10 +349,10 @@ void AuFile::on_input_enter(wxCommandEvent &evt)
     auto     dir       = m_file_path.branch_path();
     auto     new_fullname = new_file_name + m_file_path.extension().string();
 
-    
+
     wxString new_fullname_path = dir.wstring() + "/" + new_fullname;
     fs::path new_dir_path(new_fullname_path.c_str());
-    
+
 
     if (fs::exists(new_dir_path)) existing = true;
 
@@ -403,7 +405,7 @@ void AuFile::on_input_enter(wxCommandEvent &evt)
     // evt.Skip();
 }
 
-void AuFile::on_dclick(wxMouseEvent &evt) 
+void AuFile::on_dclick(wxMouseEvent &evt)
 {
     if (m_type == AddFileButton)
         return;
@@ -427,9 +429,9 @@ void AuFile::on_mouse_left_up(wxMouseEvent &evt)
     auto cover_right  = mask_size.x / 2;
     auto cover_bottom = size.y;
 
-    if (pos.x > cover_left && pos.x < cover_right && pos.y > cover_top && pos.y < cover_bottom) { 
+    if (pos.x > cover_left && pos.x < cover_right && pos.y > cover_top && pos.y < cover_bottom) {
         if(m_type == MODEL_PICTURE)
-            on_set_cover(); 
+            on_set_cover();
        /* else
              on_set_rename();*/
         return;
@@ -468,7 +470,7 @@ void AuFile::on_set_cover()
     fs::path dir_path(dir.c_str());
 
     if (!fs::exists(dir_path)) {
-        fs::create_directory(dir_path); 
+        fs::create_directory(dir_path);
     }
 
     bool result = true;
@@ -543,8 +545,8 @@ void AuFile::set_cover(bool cover)
 
 AuFile::~AuFile() {}
 
-void AuFile::msw_rescale() 
-{ 
+void AuFile::msw_rescale()
+{
     m_file_cover     = ScalableBitmap(this, "auxiliary_cover", 40);
     m_file_edit_mask = ScalableBitmap(this, "auxiliary_edit_mask", FromDIP(30));
     m_file_delete    = ScalableBitmap(this, "auxiliary_delete", 20);
@@ -671,7 +673,7 @@ void AuFolderPanel::update(std::vector<fs::path> paths)
     Layout();
 }
 
-void AuFolderPanel::msw_rescale() 
+void AuFolderPanel::msw_rescale()
 {
     //m_button_add->SetMinSize(wxSize(-1, FromDIP(24)));
     for (auto i = 0; i < m_aufiles_list.GetCount(); i++) {
@@ -851,7 +853,7 @@ wxWindow *AuxiliaryPanel::create_side_tools()
     return panel;
 }
 
-void AuxiliaryPanel::msw_rescale() { 
+void AuxiliaryPanel::msw_rescale() {
     m_pictures_panel->msw_rescale();
     m_bill_of_materials_panel->msw_rescale();
     m_assembly_panel->msw_rescale();
@@ -900,7 +902,7 @@ void AuxiliaryPanel::on_import_file(wxCommandEvent &event)
     if (file_model == s_default_folders[MODEL_PICTURE]) {
         //wildcard = wxT("JPEG files (*.jpeg)|*.jpeg|BMP files (*.bmp)|*.bmp|GIF files (*.gif)|*.gif|PNG files (*.png)|*.png|JPG files (*.jpg)|*.jpg");
         wildcard = wxT("files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp");
-    } 
+    }
 
     if (file_model == s_default_folders[OTHERS]) {  wildcard = wxT("TXT files (*.txt)|*.txt"); }
     if (file_model == s_default_folders[BILL_OF_MATERIALS]){ wildcard = wxT("EXCEL files (*.xls)|*.xls|EXCEL files (*.xlsx)|*.xlsx|PDF files (*.pdf)|*.pdf"); }
@@ -916,7 +918,7 @@ void AuxiliaryPanel::on_import_file(wxCommandEvent &event)
             fs::path src_bfs_path(file_path.ToStdWstring());
             wxString dir_path = m_root_dir;
             dir_path += "/" + file_model;
-            
+
 
 
             auto is_exist = false;
@@ -924,13 +926,13 @@ void AuxiliaryPanel::on_import_file(wxCommandEvent &event)
             if (iter != m_paths_list.end()) {
                 std::vector<fs::path> list = iter->second;
                 for (auto i = 0; i < list.size(); i++) {
-                    if (src_bfs_path.filename() == list[i].filename()) { 
+                    if (src_bfs_path.filename() == list[i].filename()) {
                         is_exist = true;
                         break;
                     }
                 }
             }
-            
+
             if (!is_exist) {
                 dir_path += "/" + src_bfs_path.filename().generic_wstring();
             } else {
@@ -944,7 +946,7 @@ void AuxiliaryPanel::on_import_file(wxCommandEvent &event)
                 time_text = replaceSpace(time_text, ":", "_");
                 dir_path += "/" + before_name + "_" + time_text + src_bfs_path.extension().wstring();
             }
-           
+
 
             boost::system::error_code ec;
             if (!fs::copy_file(src_bfs_path, fs::path(dir_path.ToStdWstring()), fs::copy_option::overwrite_if_exists, ec)) continue;
@@ -1176,28 +1178,28 @@ void AuxiliaryPanel::update_all_cover()
      }
  }
 
-bool DesignerPanel::Show(bool show) 
+bool DesignerPanel::Show(bool show)
 {
     if ( wxGetApp().plater()->model().design_info != nullptr) {
         wxString text = wxString::FromUTF8(wxGetApp().plater()->model().design_info->Designer);
         m_input_designer->GetTextCtrl()->SetValue(text);
     }
 
-     if (wxGetApp().plater()->model().model_info != nullptr) { 
+     if (wxGetApp().plater()->model().model_info != nullptr) {
          wxString text = wxString::FromUTF8(wxGetApp().plater()->model().model_info->model_name);
          m_imput_model_name->GetTextCtrl()->SetValue(text);
      }
-    
+
     return wxPanel::Show(show);
 }
 
-void DesignerPanel::on_input_enter_designer(wxCommandEvent &evt) 
-{ 
+void DesignerPanel::on_input_enter_designer(wxCommandEvent &evt)
+{
     auto text  = evt.GetString();
     wxGetApp().plater()->model().SetDesigner(std::string(text.ToUTF8().data()), "");
 }
 
-void DesignerPanel::on_input_enter_model(wxCommandEvent &evt) 
+void DesignerPanel::on_input_enter_model(wxCommandEvent &evt)
 {
     auto text   = evt.GetString();
     if (wxGetApp().plater()->model().model_info) {
@@ -1205,7 +1207,7 @@ void DesignerPanel::on_input_enter_model(wxCommandEvent &evt)
     }
 }
 
-void DesignerPanel::update_info() 
+void DesignerPanel::update_info()
 {
     if (wxGetApp().plater()->model().design_info != nullptr) {
         wxString text = wxString::FromUTF8(wxGetApp().plater()->model().design_info->Designer);

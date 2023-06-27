@@ -1,5 +1,6 @@
 #include "BBLStatusBarSend.hpp"
 
+
 #include <wx/timer.h>
 #include <wx/gauge.h>
 #include <wx/button.h>
@@ -11,6 +12,7 @@
 
 #include "I18N.hpp"
 
+#include <regex>
 #include <iostream>
 
 
@@ -18,7 +20,7 @@ namespace Slic3r {
 
 
 BBLStatusBarSend::BBLStatusBarSend(wxWindow *parent, int id)
- : m_self{new wxPanel(parent, id == -1 ? wxID_ANY : id)} 
+ : m_self{new wxPanel(parent, id == -1 ? wxID_ANY : id)}
     , m_sizer(new wxBoxSizer(wxHORIZONTAL))
 {
     m_self->SetBackgroundColour(wxColour(255,255,255));
@@ -44,7 +46,7 @@ BBLStatusBarSend::BBLStatusBarSend(wxWindow *parent, int id)
     m_cancelbutton->SetBackgroundColor(wxColour(255, 255, 255));
     m_cancelbutton->SetBorderColor(btn_bd_white);
     m_cancelbutton->SetCornerRadius(m_self->FromDIP(12));
-    m_cancelbutton->Bind(wxEVT_BUTTON, 
+    m_cancelbutton->Bind(wxEVT_BUTTON,
         [this](wxCommandEvent &evt) {
         m_was_cancelled = true;
         if (m_cancel_cb_fina)
@@ -104,7 +106,7 @@ void BBLStatusBarSend::set_progress(int val)
     }
     m_prog->SetValue(val);
     set_percent_text(wxString::Format("%d%%", val));
-    
+
     m_sizer->Layout();
 }
 
@@ -151,7 +153,7 @@ void BBLStatusBarSend::show_networking_test(wxString msg)
         url = "https://status.bambu-lab.com";
     }
 
-    
+
     m_hyperlink->Bind(wxEVT_LEFT_DOWN, [this, url](auto& e) {
         wxLaunchDefaultBrowser(url);
     });
@@ -163,7 +165,7 @@ void BBLStatusBarSend::show_networking_test(wxString msg)
     m_hyperlink->Bind(wxEVT_LEAVE_WINDOW, [this, url](auto& e) {
         m_hyperlink->SetCursor(wxCURSOR_ARROW);
     });
-    
+
     set_status_text(msg);
     m_prog->Hide();
     m_stext_percent->Hide();
@@ -201,9 +203,9 @@ void BBLStatusBarSend::stop_busy()
     m_busy = false;
 }
 
-void BBLStatusBarSend::set_cancel_callback_fina(BBLStatusBarSend::CancelFn ccb) 
-{ 
-    m_cancel_cb_fina = ccb; 
+void BBLStatusBarSend::set_cancel_callback_fina(BBLStatusBarSend::CancelFn ccb)
+{
+    m_cancel_cb_fina = ccb;
      if (ccb) {
         m_sizer->Show(m_cancelbutton);
     } else {
@@ -296,16 +298,16 @@ void BBLStatusBarSend::set_percent_text(const wxString &txt)
 }
 
 void BBLStatusBarSend::set_status_text(const std::string& txt)
-{ 
+{
     this->set_status_text(txt.c_str());
 }
 
 void BBLStatusBarSend::set_status_text(const char *txt)
-{ 
+{
     this->set_status_text(wxString::FromUTF8(txt));
 }
 
-void BBLStatusBarSend::msw_rescale() { 
+void BBLStatusBarSend::msw_rescale() {
     //set_prog_block();
     m_cancelbutton->SetMinSize(wxSize(m_self->FromDIP(56), m_self->FromDIP(24)));
 }
@@ -359,7 +361,7 @@ void BBLStatusBarSend::hide_cancel_button()
     m_sizer->Layout();
 }
 
-void BBLStatusBarSend::change_button_label(wxString name) 
+void BBLStatusBarSend::change_button_label(wxString name)
 {
     m_cancelbutton->SetLabel(name);
 }

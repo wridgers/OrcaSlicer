@@ -1,8 +1,20 @@
-#include "HttpServer.hpp"
-#include <boost/log/trivial.hpp>
 #include "GUI_App.hpp"
+#define wxCRT_SystemA ::system
+
+#include "HttpServer.hpp"
+
 #include "slic3r/Utils/Http.hpp"
 #include "slic3r/Utils/NetworkAgent.hpp"
+
+#include "libslic3r/Thread.hpp"
+
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/format.hpp>
+#include <boost/log/trivial.hpp>
+
+#include <nlohmann/json.hpp>
+
+using namespace nlohmann;
 
 namespace Slic3r {
 namespace GUI {

@@ -18,6 +18,7 @@
 
 #include <boost/cast.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/log/trivial.hpp>
 
 #include <nlohmann/json.hpp>
 #include "MainFrame.hpp"

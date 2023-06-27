@@ -1,7 +1,10 @@
 #include "AxisCtrlButton.hpp"
 #include "Label.hpp"
 
+#include <wx/dcclient.h>
 #include <wx/dcgraph.h>
+
+#include "libslic3r/libslic3r.h"
 
 StateColor blank_bg(StateColor(std::make_pair(wxColour("#FFFFFF"), (int)StateColor::Normal)));
 static const wxColour BUTTON_BG_COL = wxColour("#EEEEEE");
@@ -16,7 +19,7 @@ BEGIN_EVENT_TABLE(AxisCtrlButton, wxPanel)
 EVT_LEFT_DOWN(AxisCtrlButton::mouseDown)
 EVT_LEFT_UP(AxisCtrlButton::mouseReleased)
 EVT_MOTION(AxisCtrlButton::mouseMoving)
-EVT_PAINT(AxisCtrlButton::paintEvent)   
+EVT_PAINT(AxisCtrlButton::paintEvent)
 END_EVENT_TABLE()
 
 #define OUTER_SIZE      FromDIP(105)
@@ -151,7 +154,7 @@ void AxisCtrlButton::render(wxDC& dc)
 
     gc->PushState();
     gc->Translate(center.x, center.y);
-	
+
 	//draw the outer ring
     wxGraphicsPath outer_path = gc->CreatePath();
     outer_path.AddCircle(0, 0, r_outer);

@@ -7,6 +7,7 @@
 #include "Widgets/WebView.hpp"
 #include <wx/webview.h>
 #include <wx/simplebook.h>
+#include <wx/progdlg.h>
 
 namespace Slic3r { namespace GUI {
 

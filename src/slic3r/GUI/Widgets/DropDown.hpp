@@ -1,6 +1,7 @@
 #ifndef slic3r_GUI_DropDown_hpp_
 #define slic3r_GUI_DropDown_hpp_
 
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <wx/stattext.h>
 #include "../wxExtensions.hpp"
 #include "StateHandler.hpp"
@@ -44,15 +45,15 @@ class DropDown : public PopupWindow
 public:
     DropDown(std::vector<wxString> &texts,
              std::vector<wxBitmap> &icons);
-    
+
     DropDown(wxWindow *     parent,
              std::vector<wxString> &texts,
              std::vector<wxBitmap> &icons,
              long           style     = 0);
-    
+
     void Create(wxWindow *     parent,
              long           style     = 0);
-    
+
 public:
     void Invalidate(bool clear = false);
 
@@ -77,12 +78,12 @@ public:
     void SetUseContentWidth(bool use);
 
     void SetAlignIcon(bool align);
-    
+
 public:
     void Rescale();
 
     bool HasDismissLongTime();
-    
+
 protected:
     void OnDismiss() override;
 

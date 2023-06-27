@@ -1,3 +1,8 @@
+#include <boost/log/trivial.hpp>
+
+#include <wx/settings.h>
+#include <wx/dcclient.h>
+
 #include "libslic3r/Utils.hpp"
 #include "Label.hpp"
 #include "StaticBox.hpp"
@@ -196,9 +201,9 @@ public:
     }
 
 protected:
-    virtual void OnOutputLine(const wxString &line) wxOVERRIDE { m_text += line; }
+    virtual void OnOutputLine(const wxString &line) override { m_text += line; }
 
-    virtual void OnNewLine() wxOVERRIDE { m_text += wxT('\n'); }
+    virtual void OnNewLine() override { m_text += wxT('\n'); }
 
 private:
     wxString m_text;

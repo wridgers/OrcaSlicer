@@ -1,11 +1,14 @@
 #ifndef slic3r_AMSMaterialsSetting_hpp_
 #define slic3r_AMSMaterialsSetting_hpp_
 
+#include <wx/clrpicker.h>
+#include <wx/colourdata.h>
+
 #include "libslic3r/Preset.hpp"
 #include "wxExtensions.hpp"
 #include "GUI_Utils.hpp"
 #include "DeviceManager.hpp"
-#include "wx/clrpicker.h"
+
 #include "Widgets/RadioBox.hpp"
 #include "Widgets/Button.hpp"
 #include "Widgets/RoundedRectangle.hpp"
@@ -36,7 +39,7 @@ public:
     std::vector<wxColour>        m_cols;
     bool            m_selected{false};
     bool            m_show_full{false};
-    
+
     ColorPicker(wxWindow* parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize);
     ~ColorPicker();
 
@@ -69,8 +72,8 @@ public:
     void set_def_colour(wxColour col);
     void paintEvent(wxPaintEvent& evt);
     void Popup();
-    virtual void OnDismiss() wxOVERRIDE;
-    virtual bool ProcessLeftDown(wxMouseEvent& event) wxOVERRIDE;
+    virtual void OnDismiss() override;
+    virtual bool ProcessLeftDown(wxMouseEvent& event) override;
 
 public:
 };

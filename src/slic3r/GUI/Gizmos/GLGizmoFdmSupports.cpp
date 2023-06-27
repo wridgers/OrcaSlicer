@@ -15,7 +15,7 @@
 #include "slic3r/GUI/GUI.hpp"
 #include "slic3r/Utils/UndoRedo.hpp"
 
-
+#include <boost/log/trivial.hpp>
 #include <GL/glew.h>
 
 
@@ -903,7 +903,7 @@ void GLGizmoFdmSupports::run_thread()
         }
         BOOST_LOG_TRIVIAL(info) << __FUNCTION__ << ", finished extrusionentity_to_verts, update status to 100%";
         print->set_status(100, L("Support Generated"));
-        
+
         record_timestamp();
     }
     catch (...) {

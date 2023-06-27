@@ -26,6 +26,7 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/string_file.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/nowide/iostream.hpp>
 
@@ -2048,7 +2049,7 @@ ModelObjectPtrs ModelObject::cut(size_t instance, std::array<Vec3d, 4> plane_poi
     // Displacement (in instance coordinates) to be applied to place the upper parts
     Vec3d local_displace = Vec3d::Zero();
     Vec3d local_dowels_displace = Vec3d::Zero();
-    
+
     for (ModelVolume *volume : volumes) {
         const auto volume_matrix = volume->get_matrix();
 
@@ -2073,7 +2074,7 @@ ModelObjectPtrs ModelObject::cut(size_t instance, std::array<Vec3d, 4> plane_poi
     }
 
     ModelObjectPtrs res;
-    
+
     if (attributes.has(ModelObjectCutAttribute::CutToParts) && !upper->volumes.empty()) {
         reset_instance_transformation(upper, instance, cut_matrix);
         res.push_back(upper);

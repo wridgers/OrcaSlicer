@@ -23,6 +23,8 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/format.hpp>
 #include <boost/log/trivial.hpp>
+#include <boost/nowide/fstream.hpp>
+#include <tbb/parallel_for.h>
 
 //BBS: add json support
 #include "nlohmann/json.hpp"
@@ -165,7 +167,7 @@ bool Print::invalidate_state_by_config_options(const ConfigOptionResolver & /* n
         "accel_to_decel_factor",
         "wipe_on_loops",
         "gcode_comments",
-        "gcode_label_objects", 
+        "gcode_label_objects",
         "exclude_object",
         "support_material_interface_fan_speed"
     };
@@ -959,10 +961,10 @@ StringObjectException Print::validate(StringObjectException *warning, Polygons* 
                 // BBS: remove L()
                 return { ("Different nozzle diameters and different filament diameters is not allowed when prime tower is enabled.") };
         }
-        
+
         if (! m_config.use_relative_e_distances)
             return { ("The Wipe Tower is currently only supported with the relative extruder addressing (use_relative_e_distances=1).") };
-        
+
         if (m_config.ooze_prevention)
             return { ("Ooze prevention is currently not supported with the prime tower enabled.") };
 
@@ -1192,7 +1194,7 @@ StringObjectException Print::validate(StringObjectException *warning, Polygons* 
 	                }
 
 	                StringObjectException except;
-	                except.string = format(L("Plate %d: %s does not support filament %s"), this->get_plate_index() + 1, L(bed_type_name), extruder_id + 1);
+	                except.string = (boost::format("Plate %1%: %2% does not support filament %3%")%(this->get_plate_index() + 1)%L(bed_type_name)%(extruder_id + 1)).str();
 	                except.string += "\n";
 	                except.type   = STRING_EXCEPT_FILAMENT_NOT_MATCH_BED_TYPE;
 	                except.params.push_back(std::to_string(this->get_plate_index() + 1));

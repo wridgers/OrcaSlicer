@@ -162,8 +162,8 @@ public:
     void         paintEvent(wxPaintEvent& evt);
     void         post_event(int fan_type, wxString speed);
     void         on_show(wxShowEvent& evt);
-    virtual void OnDismiss() wxOVERRIDE;
-    virtual bool ProcessLeftDown(wxMouseEvent& event) wxOVERRIDE;
+    virtual void OnDismiss() override;
+    virtual bool ProcessLeftDown(wxMouseEvent& event) override;
 };
 
 wxDECLARE_EVENT(EVT_FAN_SWITCH_ON, wxCommandEvent);

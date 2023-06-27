@@ -3,6 +3,8 @@
 #include "GUI_App.hpp"
 #include "libslic3r/Utils.hpp"
 
+#include <boost/log/trivial.hpp>
+
 static const wxColour STATIC_BOX_LINE_COL = wxColour(238, 238, 238);
 static const wxColour STATIC_TEXT_CAPTION_COL = wxColour(100, 100, 100);
 
@@ -308,9 +310,9 @@ void PrintOptionsDialog::update_machine_obj(MachineObject *obj_)
 
 bool PrintOptionsDialog::Show(bool show)
 {
-    if (show) { 
+    if (show) {
         wxGetApp().UpdateDlgDarkUI(this);
-        CentreOnParent(); 
+        CentreOnParent();
     }
     return DPIDialog::Show(show);
 }

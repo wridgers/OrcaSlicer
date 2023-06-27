@@ -82,13 +82,13 @@ public:
     };
     MachineListModel();
 
-    virtual unsigned int GetColumnCount() const wxOVERRIDE { return Col_Max; }
+    virtual unsigned int GetColumnCount() const override { return Col_Max; }
 
-    virtual wxString GetColumnType(unsigned int col) const wxOVERRIDE { return "string"; }
+    virtual wxString GetColumnType(unsigned int col) const override { return "string"; }
 
-    virtual void GetValueByRow(wxVariant &variant, unsigned int row, unsigned int col) const wxOVERRIDE;
-    virtual bool GetAttrByRow(unsigned int row, unsigned int col, wxDataViewItemAttr &attr) const wxOVERRIDE;
-    virtual bool SetValueByRow(const wxVariant &variant, unsigned int row, unsigned int col) wxOVERRIDE;
+    virtual void GetValueByRow(wxVariant &variant, unsigned int row, unsigned int col) const override;
+    virtual bool GetAttrByRow(unsigned int row, unsigned int col, wxDataViewItemAttr &attr) const override;
+    virtual bool SetValueByRow(const wxVariant &variant, unsigned int row, unsigned int col) override;
 
     void display_machines(std::map<std::string, MachineObject *> list);
     void add_machine(MachineObject *obj, bool reset = true);
@@ -187,10 +187,10 @@ public:
     ~SelectMachinePopup();
 
     // PopupWindow virtual methods are all overridden to log them
-    virtual void Popup(wxWindow *focus = NULL) wxOVERRIDE;
-    virtual void OnDismiss() wxOVERRIDE;
-    virtual bool ProcessLeftDown(wxMouseEvent &event) wxOVERRIDE;
-    virtual bool Show(bool show = true) wxOVERRIDE;
+    virtual void Popup(wxWindow *focus = NULL) override;
+    virtual void OnDismiss() override;
+    virtual bool ProcessLeftDown(wxMouseEvent &event) override;
+    virtual bool Show(bool show = true) override;
 
     void update_machine_list(wxCommandEvent &event);
     void start_ssdp(bool on_off);

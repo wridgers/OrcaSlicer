@@ -33,10 +33,12 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/foreach.hpp>
+#include <boost/lexical_cast.hpp>
 #include <openssl/md5.h>
 
 namespace pt = boost::property_tree;
 
+#include <tbb/parallel_for.h>
 #include <tbb/parallel_reduce.h>
 
 #include <expat.h>
@@ -5829,7 +5831,7 @@ void PlateData::parse_filament_info(GCodeProcessorResult *result)
                 date = date.substr(0, 10);
                 metadata_item_map[BBL_CREATION_DATE_TAG] = date;
                 metadata_item_map[BBL_MODIFICATION_TAG]  = date;
-                //SoftFever: write BambuStudio tag to keep it compatible 
+                //SoftFever: write BambuStudio tag to keep it compatible
                 metadata_item_map[BBL_APPLICATION_TAG] = (boost::format("%1%-%2%") % "BambuStudio" % SLIC3R_VERSION).str();
             }
             metadata_item_map[BBS_3MF_VERSION] = std::to_string(VERSION_BBS_3MF);

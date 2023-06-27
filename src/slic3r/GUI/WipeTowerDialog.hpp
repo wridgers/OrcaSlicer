@@ -6,6 +6,8 @@
 #include <wx/textctrl.h>
 #include <wx/checkbox.h>
 #include <wx/msgdlg.h>
+#include <wx/panel.h>
+#include <wx/sizer.h>
 
 class Button;
 
@@ -33,7 +35,7 @@ private:
     bool advanced_matches_simple();
     int calc_flushing_volume(const wxColour& from, const wxColour& to);
     void update_warning_texts();
-        
+
     std::vector<wxSpinCtrl*> m_old;
     std::vector<wxSpinCtrl*> m_new;
     std::vector<std::vector<wxTextCtrl*>> edit_boxes;

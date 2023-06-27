@@ -82,7 +82,7 @@ public:
     virtual void DrawItemSelectionRect(wxWindow *win,
                                        wxDC& dc,
                                        const wxRect& rect,
-                                       int flags = 0) wxOVERRIDE
+                                       int flags = 0) override
         { GetGeneric().DrawItemSelectionRect(win, dc, rect, flags); }
 };
 

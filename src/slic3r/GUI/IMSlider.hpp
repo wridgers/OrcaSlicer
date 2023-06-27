@@ -4,6 +4,8 @@
 #include "TickCode.hpp"
 #include <imgui/imgui.h>
 
+#include <wx/slider.h>
+
 #include <set>
 
 class wxMenu;
@@ -17,7 +19,7 @@ class Layer;
 
 namespace GUI {
 
-/* For exporting GCode in GCodeWriter is used XYZF_NUM(val) = PRECISION(val, 3) for XYZ values. 
+/* For exporting GCode in GCodeWriter is used XYZF_NUM(val) = PRECISION(val, 3) for XYZ values.
  * So, let use same value as a permissible error for layer height.
  */
 constexpr double epsilon() { return 0.0011; }

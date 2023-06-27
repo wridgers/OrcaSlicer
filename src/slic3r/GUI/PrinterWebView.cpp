@@ -6,6 +6,8 @@
 #include "slic3r/GUI/MainFrame.hpp"
 #include "libslic3r_version.h"
 
+#include <boost/log/trivial.hpp>
+
 #include <wx/sizer.h>
 #include <wx/toolbar.h>
 #include <wx/textdlg.h>

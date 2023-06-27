@@ -4,6 +4,8 @@
 #include "Widgets/Label.hpp"
 #include "libslic3r/Utils.hpp"
 
+#include <boost/log/trivial.hpp>
+
 namespace Slic3r {
 namespace GUI {
 
@@ -182,7 +184,7 @@ SliceInfoPanel::SliceInfoPanel(wxWindow *parent, wxBitmap &prediction, wxBitmap 
     this->SetBackgroundColour(*wxWHITE);
 
     m_item_top_sizer = new wxBoxSizer(wxHORIZONTAL);
-    
+
     m_bmp_item_thumbnail = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW | 0);
     m_bmp_item_thumbnail->SetMinSize(THUMBNAIL_SIZE);
     m_bmp_item_thumbnail->SetSize(THUMBNAIL_SIZE);

@@ -16,11 +16,13 @@
 #include <wx/progdlg.h>
 #include <wx/clipbrd.h>
 #include <wx/dcgraph.h>
+#include <wx/mstream.h>
 #include <miniz.h>
 #include <algorithm>
 #include "Plater.hpp"
 #include "BitmapCache.hpp"
 #include "BindDialog.hpp"
+#include <boost/log/trivial.hpp>
 
 namespace Slic3r { namespace GUI {
 
@@ -264,14 +266,14 @@ void MachineObjectPanel::doRender(wxDC &dc)
     }
     auto        sizet        = dc.GetTextExtent(dev_name);
     auto        text_end     = 0;
-    
+
     if (m_show_edit) {
         text_end = size.x - m_unbind_img.GetBmpSize().x - 30;
     }
     else {
         text_end = size.x - m_unbind_img.GetBmpSize().x;
     }
-       
+
     wxString finally_name =  dev_name;
     if (sizet.x > (text_end - left)) {
         auto limit_width = text_end - left - dc.GetTextExtent("...").x - 15;
@@ -1474,7 +1476,7 @@ wxWindow *SelectMachineDialog::create_item_checkbox(wxString title, wxWindow *pa
     checkbox->Bind(wxEVT_TOGGLEBUTTON, [this, param, check](wxCommandEvent &e) {
         wxGetApp().app_config->set("bbl_machine",param.c_str(), check->GetValue());
     });
-    
+
     text->Bind(wxEVT_LEFT_DOWN, [this, check](wxMouseEvent &) { check->SetValue(check->GetValue() ? false : true); });
 
 
@@ -1499,7 +1501,7 @@ wxWindow *SelectMachineDialog::create_item_checkbox(wxString title, wxWindow *pa
                 config->set_str("print", param, "0");
         }
         });
-    
+
     text->Bind(wxEVT_LEFT_DOWN, [this, check, param](wxMouseEvent &) {
         check->SetValue(check->GetValue() ? false : true);
         AppConfig* config = wxGetApp().app_config;
@@ -2105,7 +2107,7 @@ void SelectMachineDialog::on_ok_btn(wxCommandEvent &event)
     //Check slice warnings
     bool has_slice_warnings = false;
     PartPlate* plate = m_plater->get_partplate_list().get_curr_plate();
-   
+
     for (auto warning : plate->get_slice_result()->warnings) {
         if (warning.msg == BED_TEMP_TOO_HIGH_THAN_FILAMENT) {
             if ((obj_->printer_type == "BL-P001" || obj_->printer_type == "BL-P002")) {
@@ -3229,10 +3231,10 @@ void SelectMachineDialog::set_default()
                 pos.y += item->GetRect().height;
                 m_mapping_popup.Move(pos);
 
-                if (obj_ && 
-                    obj_->has_ams() && 
+                if (obj_ &&
+                    obj_->has_ams() &&
                     ams_check->GetValue() &&
-                    obj_->dev_id == m_printer_last_select) 
+                    obj_->dev_id == m_printer_last_select)
                 {
                     m_mapping_popup.set_parent_item(item);
                     m_mapping_popup.set_current_filament_id(extruder);

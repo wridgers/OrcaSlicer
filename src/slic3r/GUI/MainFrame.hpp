@@ -7,6 +7,7 @@
 #include <wx/settings.h>
 #include <wx/string.h>
 #include <wx/filehistory.h>
+#include <wx/timer.h>
 #ifdef __APPLE__
 #include <wx/taskbar.h>
 #endif // __APPLE__

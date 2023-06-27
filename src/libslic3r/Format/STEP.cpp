@@ -5,6 +5,9 @@
 #include "STEP.hpp"
 
 #include <string>
+#include <boost/nowide/fstream.hpp>
+#include <boost/nowide/cstdio.hpp>
+#include <tbb/parallel_for.h>
 
 #ifdef _WIN32
 #define DIR_SEPARATOR '\\'

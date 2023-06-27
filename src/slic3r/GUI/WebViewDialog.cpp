@@ -10,6 +10,9 @@
 #include <wx/toolbar.h>
 #include <wx/textdlg.h>
 
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/log/trivial.hpp>
+
 #include <slic3r/GUI/Widgets/WebView.hpp>
 
 namespace pt = boost::property_tree;
@@ -37,7 +40,7 @@ WebViewPanel::WebViewPanel(wxWindow *parent)
         url = wxString::Format("file://%s/web/homepage/index.html?lang=%s", from_u8(resources_dir()), strlang);
 
     wxBoxSizer* topsizer = new wxBoxSizer(wxVERTICAL);
-    
+
 #if !BBL_RELEASE_TO_PUBLIC
     // Create the button
     bSizer_toolbar = new wxBoxSizer(wxHORIZONTAL);
@@ -218,7 +221,7 @@ WebViewPanel::~WebViewPanel()
 {
     BOOST_LOG_TRIVIAL(info) << __FUNCTION__ << " Start";
     SetEvtHandlerEnabled(false);
-    
+
     delete m_tools_menu;
 
     if (m_LoginUpdateTimer != nullptr) {

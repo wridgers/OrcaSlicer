@@ -9,6 +9,7 @@
 #include "3DScene.hpp"
 #include "OpenGLManager.hpp"
 
+#include <boost/log/trivial.hpp>
 #include <GL/glew.h>
 
 #include <wx/image.h>

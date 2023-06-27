@@ -10,6 +10,7 @@
 #include "format.hpp"
 #include "Widgets/RoundedRectangle.hpp"
 #include "Widgets/StaticBox.hpp"
+#include <boost/log/trivial.hpp>
 
 static wxColour FG_COLOR = wxColour(0x32, 0x3A, 0x3D);
 static wxColour BG_COLOR = wxColour(0xF8, 0xF8, 0xF8);
@@ -125,7 +126,7 @@ CalibrationDialog::CalibrationDialog(Plater *plater)
     auto calibration_sizer = new wxBoxSizer(wxVERTICAL);
     calibration_panel->SetMinSize(wxSize(FromDIP(170), FromDIP(160)));
     calibration_panel->SetSize(wxSize(FromDIP(170), FromDIP(160)));
-   
+
     m_calibration_flow = new StepIndicator(calibration_panel, wxID_ANY);
     StateColor bg_color(std::pair<wxColour, int>(BG_COLOR, StateColor::Normal));
     m_calibration_flow->SetBackgroundColor(bg_color);
@@ -133,7 +134,7 @@ CalibrationDialog::CalibrationDialog(Plater *plater)
 
     m_calibration_flow->SetMinSize(wxSize(FromDIP(170), FromDIP(160)));
     m_calibration_flow->SetSize(wxSize(FromDIP(170), FromDIP(160)));
-    
+
     calibration_panel->SetSizer(calibration_sizer);
     calibration_panel->Layout();
     calibration_sizer->Add(m_calibration_flow, 0, wxEXPAND, 0);
@@ -291,11 +292,11 @@ void CalibrationDialog::on_start_calibration(wxMouseEvent &event)
 
 void CalibrationDialog::update_machine_obj(MachineObject *obj) { m_obj = obj; }
 
-bool CalibrationDialog::Show(bool show) 
+bool CalibrationDialog::Show(bool show)
 {
-    if (show) { 
+    if (show) {
         wxGetApp().UpdateDlgDarkUI(this);
-        CentreOnParent(); 
+        CentreOnParent();
     }
     return DPIDialog::Show(show);
 }

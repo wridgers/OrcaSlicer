@@ -9,7 +9,10 @@
 #define ImageGrid_h
 
 #include <wx/window.h>
+#include <wx/timer.h>
+
 #include <boost/shared_ptr.hpp>
+#include <boost/log/trivial.hpp>
 
 #include "Widgets/StateColor.hpp"
 #include "wxExtensions.hpp"

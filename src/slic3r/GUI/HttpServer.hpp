@@ -11,9 +11,9 @@
 #include <boost/thread.hpp>
 #include <string>
 #include <memory>
+#include <iostream>
 
 using namespace boost;
-using namespace boost::system;
 using namespace boost::asio;
 
 #define LOCALHOST_PORT      13618

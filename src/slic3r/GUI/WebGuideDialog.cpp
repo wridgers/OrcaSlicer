@@ -20,6 +20,8 @@
 #include <boost/cast.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/log/trivial.hpp>
+#include <boost/nowide/fstream.hpp>
 
 #include "MainFrame.hpp"
 #include <boost/dll.hpp>
@@ -60,7 +62,7 @@ GuideFrame::GuideFrame(GUI_App *pGUI, long style)
     }
     m_browser->Hide();
     m_browser->SetSize(0, 0);
-    
+
     SetSizer(topsizer);
 
     topsizer->Add(m_browser, wxSizerFlags().Expand().Proportion(1));
@@ -227,7 +229,7 @@ void GuideFrame::OnNavigationComplete(wxWebViewEvent &evt)
     //wxLogMessage("%s", "Navigation complete; url='" + evt.GetURL() + "'");
     m_browser->Show();
     Layout();
-    
+
     wxString NewUrl = evt.GetURL();
 
     UpdateState();

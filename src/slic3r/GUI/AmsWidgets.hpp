@@ -65,22 +65,22 @@ public:
 
 	TrayListModel();
 
-	virtual unsigned int GetColumnCount() const wxOVERRIDE
+	virtual unsigned int GetColumnCount() const override
 	{
 		return Col_Max;
 	}
 
-	virtual wxString GetColumnType(unsigned int col) const wxOVERRIDE
+	virtual wxString GetColumnType(unsigned int col) const override
 	{
 		return "string";
 	}
 
 	virtual void GetValueByRow(wxVariant& variant,
-		unsigned int row, unsigned int col) const wxOVERRIDE;
+		unsigned int row, unsigned int col) const override;
 	virtual bool GetAttrByRow(unsigned int row, unsigned int col,
-		wxDataViewItemAttr& attr) const wxOVERRIDE;
+		wxDataViewItemAttr& attr) const override;
 	virtual bool SetValueByRow(const wxVariant& variant,
-		unsigned int row, unsigned int col) wxOVERRIDE;
+		unsigned int row, unsigned int col) override;
 
 	void update(MachineObject* obj);
 	void clear_data();

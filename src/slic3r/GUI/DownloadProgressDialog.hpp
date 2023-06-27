@@ -13,6 +13,7 @@
 #include <wx/textctrl.h>
 #include <wx/statline.h>
 #include <wx/simplebook.h>
+
 #include "Widgets/Button.hpp"
 #include "BBLStatusBar.hpp"
 #include "BBLStatusBarSend.hpp"

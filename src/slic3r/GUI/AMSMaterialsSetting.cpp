@@ -5,12 +5,13 @@
 #include "libslic3r/Preset.hpp"
 #include "I18N.hpp"
 #include <wx/dcgraph.h>
+#include <boost/log/trivial.hpp>
 
 namespace Slic3r { namespace GUI {
 
 wxDEFINE_EVENT(EVT_SELECTED_COLOR, wxCommandEvent);
 
-AMSMaterialsSetting::AMSMaterialsSetting(wxWindow *parent, wxWindowID id) 
+AMSMaterialsSetting::AMSMaterialsSetting(wxWindow *parent, wxWindowID id)
     : DPIDialog(parent, id, _L("AMS Materials Setting"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE)
     , m_color_picker_popup(ColorPickerPopup(this))
 {
@@ -66,7 +67,7 @@ void AMSMaterialsSetting::create()
     m_sizer_button->Add(m_button_close, 0, wxALIGN_CENTER, 0);
 
     m_sizer_main->Add(m_panel_normal, 0, wxALL, FromDIP(2));
-    
+
     m_sizer_main->Add(m_panel_kn, 0, wxALL, FromDIP(2));
 
     m_sizer_main->Add(0, 0, 0, wxTOP, FromDIP(24));
@@ -311,7 +312,7 @@ void AMSMaterialsSetting::create_panel_kn(wxWindow* parent)
     parent->SetSizer(sizer);
 }
 
-void AMSMaterialsSetting::paintEvent(wxPaintEvent &evt) 
+void AMSMaterialsSetting::paintEvent(wxPaintEvent &evt)
 {
     auto      size = GetSize();
     wxPaintDC dc(this);
@@ -325,7 +326,7 @@ AMSMaterialsSetting::~AMSMaterialsSetting()
     m_comboBox_filament->Disconnect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(AMSMaterialsSetting::on_select_filament), NULL, this);
 }
 
-void AMSMaterialsSetting::input_min_finish() 
+void AMSMaterialsSetting::input_min_finish()
 {
     if (m_input_nozzle_min->GetTextCtrl()->GetValue().empty()) return;
 
@@ -372,7 +373,7 @@ void AMSMaterialsSetting::enable_confirm_button(bool en)
 {
     m_button_confirm->Show(en);
     if (!m_is_third) {
-        m_tip_readonly->Hide(); 
+        m_tip_readonly->Hide();
     }
     else {
         m_comboBox_filament->Show(en);
@@ -647,7 +648,7 @@ void AMSMaterialsSetting::on_picker_color(wxCommandEvent& event)
     set_color(wxColour(color_num>>16&0xFF, color_num>>8&0xFF, color_num&0xFF));
 }
 
-void AMSMaterialsSetting::on_clr_picker(wxMouseEvent &event) 
+void AMSMaterialsSetting::on_clr_picker(wxMouseEvent &event)
 {
     if(!m_is_third || obj->is_in_printing() || obj->can_resume())
         return;
@@ -708,8 +709,8 @@ void AMSMaterialsSetting::update_widgets()
     Layout();
 }
 
-bool AMSMaterialsSetting::Show(bool show) 
-{ 
+bool AMSMaterialsSetting::Show(bool show)
+{
     if (show) {
         m_button_confirm->SetMinSize(AMS_MATERIALS_SETTING_BUTTON_SIZE);
         m_input_nozzle_max->GetTextCtrl()->SetSize(wxSize(-1, FromDIP(20)));
@@ -730,7 +731,7 @@ bool AMSMaterialsSetting::Show(bool show)
         Fit();
         wxGetApp().UpdateDarkUI(this);
     }
-    return DPIDialog::Show(show); 
+    return DPIDialog::Show(show);
 }
 
 void AMSMaterialsSetting::Popup(wxString filament, wxString sn, wxString temp_min, wxString temp_max, wxString k, wxString n)
@@ -1215,7 +1216,7 @@ void ColorPickerPopup::paintEvent(wxPaintEvent& evt)
 
 void ColorPickerPopup::OnDismiss() {}
 
-void ColorPickerPopup::Popup() 
+void ColorPickerPopup::Popup()
 {
     PopupWindow::Popup();
 }

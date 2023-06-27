@@ -3,6 +3,8 @@
 
 #include "imgui/imgui.h"
 
+#include <array>
+
 enum RenderCol_ {
     RenderCol_3D_Background = 0,
     RenderCol_Plate_Unselected,

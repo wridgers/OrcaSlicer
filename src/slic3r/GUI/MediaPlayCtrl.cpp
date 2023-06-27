@@ -9,6 +9,11 @@
 #include "DownloadProgressDialog.hpp"
 
 #include <boost/filesystem/string_file.hpp>
+#include <boost/log/trivial.hpp>
+#include <boost/nowide/fstream.hpp>
+#include <boost/nowide/cstdio.hpp>
+#include <boost/lexical_cast.hpp>
+
 #undef pid_t
 #include <boost/process.hpp>
 #ifdef __WIN32__
@@ -17,6 +22,8 @@
 #include <sys/ipc.h>
 #include <sys/shm.h>
 #endif
+
+#include <wx/clipbrd.h>
 
 namespace Slic3r {
 namespace GUI {
@@ -161,12 +168,12 @@ void MediaPlayCtrl::Play()
 
     if (m_lan_mode) {
         m_failed_code = 1;
-        Stop(m_lan_passwd.empty() 
-            ? _L("Initialize failed (Not supported with LAN-only mode)!") 
+        Stop(m_lan_passwd.empty()
+            ? _L("Initialize failed (Not supported with LAN-only mode)!")
             : _L("Initialize failed (Not accessible in LAN-only mode)!"));
         return;
     }
-    
+
     if (!m_tutk_support) { // not support tutk
         if (m_device_busy) {
             Stop(_L("Printer is busy downloading, Please wait for the downloading to finish."));
@@ -174,8 +181,8 @@ void MediaPlayCtrl::Play()
             return;
         }
         m_failed_code = 1;
-        Stop(m_lan_ip.empty() 
-            ? _L("Initialize failed (Missing LAN ip of printer)!") 
+        Stop(m_lan_ip.empty()
+            ? _L("Initialize failed (Missing LAN ip of printer)!")
             : _L("Initialize failed (Not supported by printer)!"));
         return;
     }
@@ -519,14 +526,14 @@ bool MediaPlayCtrl::start_stream_service(bool *need_install)
         std::string file_dll2 = data_dir() + "/plugins/BambuSource.dll";
         if (!boost::filesystem::exists(file_dll) || boost::filesystem::last_write_time(file_dll) != boost::filesystem::last_write_time(file_dll2))
             boost::filesystem::copy_file(file_dll2, file_dll, boost::filesystem::copy_option::overwrite_if_exists);
-        boost::process::child process_source(file_source, file_url2.data().AsInternal(), boost::process::start_dir(start_dir), boost::process::windows::create_no_window, 
+        boost::process::child process_source(file_source, file_url2.data().AsInternal(), boost::process::start_dir(start_dir), boost::process::windows::create_no_window,
                                              boost::process::std_out > intermediate, boost::process::limit_handles);
-        boost::process::child process_ffmpeg(file_ffmpeg, configss, boost::process::windows::create_no_window, 
+        boost::process::child process_ffmpeg(file_ffmpeg, configss, boost::process::windows::create_no_window,
                                              boost::process::std_in < intermediate, boost::process::limit_handles);
 #else
         boost::filesystem::permissions(file_source, boost::filesystem::owner_exe | boost::filesystem::add_perms);
         boost::filesystem::permissions(file_ffmpeg, boost::filesystem::owner_exe | boost::filesystem::add_perms);
-        boost::process::child process_source(file_source, file_url2.data().AsInternal(), boost::process::start_dir(start_dir), 
+        boost::process::child process_source(file_source, file_url2.data().AsInternal(), boost::process::start_dir(start_dir),
                                              boost::process::std_out > intermediate, boost::process::limit_handles);
         boost::process::child process_ffmpeg(file_ffmpeg, configss, boost::process::std_in < intermediate, boost::process::limit_handles);
 #endif
@@ -600,4 +607,3 @@ void wxMediaCtrl2::DoSetSize(int x, int y, int width, int height, int sizeFlags)
         });
     }
 }
-

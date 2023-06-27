@@ -15,6 +15,7 @@
 
 #include <boost/nowide/iostream.hpp>
 #include <boost/nowide/convert.hpp>
+#include <boost/log/trivial.hpp>
 
 #if __APPLE__
     #include <signal.h>

@@ -10,6 +10,9 @@
 #include "WebViewDialog.hpp"
 #include "PartPlate.hpp"
 
+#include <boost/log/trivial.hpp>
+#include <wx/display.h>
+
 #define TOPBAR_ICON_SIZE  18
 #define TOPBAR_TITLE_WIDTH  300
 
@@ -32,9 +35,9 @@ enum CUSTOM_ID
 class BBLTopbarArt : public wxAuiDefaultToolBarArt
 {
 public:
-    virtual void DrawLabel(wxDC& dc, wxWindow* wnd, const wxAuiToolBarItem& item, const wxRect& rect) wxOVERRIDE;
-    virtual void DrawBackground(wxDC& dc, wxWindow* wnd, const wxRect& rect) wxOVERRIDE;
-    virtual void DrawButton(wxDC& dc, wxWindow* wnd, const wxAuiToolBarItem& item, const wxRect& rect) wxOVERRIDE;
+    virtual void DrawLabel(wxDC& dc, wxWindow* wnd, const wxAuiToolBarItem& item, const wxRect& rect) override;
+    virtual void DrawBackground(wxDC& dc, wxWindow* wnd, const wxRect& rect) override;
+    virtual void DrawButton(wxDC& dc, wxWindow* wnd, const wxAuiToolBarItem& item, const wxRect& rect) override;
 };
 
 void BBLTopbarArt::DrawLabel(wxDC& dc, wxWindow* wnd, const wxAuiToolBarItem& item, const wxRect& rect)
@@ -177,19 +180,19 @@ void BBLTopbarArt::DrawButton(wxDC& dc, wxWindow* wnd, const wxAuiToolBarItem& i
     }
 }
 
-BBLTopbar::BBLTopbar(wxFrame* parent) 
+BBLTopbar::BBLTopbar(wxFrame* parent)
     : wxAuiToolBar(parent, ID_TOOL_BAR, wxDefaultPosition, wxDefaultSize, wxAUI_TB_TEXT | wxAUI_TB_HORZ_TEXT)
-{ 
+{
     Init(parent);
 }
 
 BBLTopbar::BBLTopbar(wxWindow* pwin, wxFrame* parent)
-    : wxAuiToolBar(pwin, ID_TOOL_BAR, wxDefaultPosition, wxDefaultSize, wxAUI_TB_TEXT | wxAUI_TB_HORZ_TEXT) 
-{ 
+    : wxAuiToolBar(pwin, ID_TOOL_BAR, wxDefaultPosition, wxDefaultSize, wxAUI_TB_TEXT | wxAUI_TB_HORZ_TEXT)
+{
     Init(parent);
 }
 
-void BBLTopbar::Init(wxFrame* parent) 
+void BBLTopbar::Init(wxFrame* parent)
 {
     SetArtProvider(new BBLTopbarArt());
     m_frame = parent;
@@ -623,7 +626,7 @@ void BBLTopbar::OnMouseLeftDown(wxMouseEvent& event)
     wxPoint frame_pos = m_frame->GetScreenPosition();
     m_delta = mouse_pos - frame_pos;
 
-    if (FindToolByCurrentPosition() == NULL 
+    if (FindToolByCurrentPosition() == NULL
         || this->FindToolByCurrentPosition() == m_title_item)
     {
         CaptureMouse();
@@ -633,7 +636,7 @@ void BBLTopbar::OnMouseLeftDown(wxMouseEvent& event)
         return;
 #endif //  __WXMSW__
     }
-    
+
     event.Skip();
 }
 
@@ -661,7 +664,7 @@ void BBLTopbar::OnMouseMotion(wxMouseEvent& event)
 
     if (event.Dragging() && event.LeftIsDown())
     {
-        // leave max state and adjust position 
+        // leave max state and adjust position
         if (m_frame->IsMaximized()) {
             wxRect rect = m_frame->GetRect();
             // Filter unexcept mouse move

@@ -12,6 +12,8 @@
 #include <wx/popupwin.h>
 #include <wx/spinctrl.h>
 #include <wx/artprov.h>
+#include <wx/window.h>
+#include <wx/scrolwin.h>
 
 #include <vector>
 #include <functional>
@@ -40,7 +42,7 @@ wxMenuItem* append_menu_radio_item(wxMenu* menu, int id, const wxString& string,
 
 wxMenuItem* append_menu_check_item(wxMenu* menu, int id, const wxString& string, const wxString& description,
     std::function<void(wxCommandEvent & event)> cb, wxEvtHandler* event_handler,
-    std::function<bool()> const enable_condition = []() { return true; }, 
+    std::function<bool()> const enable_condition = []() { return true; },
     std::function<bool()> const check_condition = []() { return true; }, wxWindow* parent = nullptr);
 
 void enable_menu_item(wxUpdateUIEvent& evt, std::function<bool()> const cb_condition, wxMenuItem* item, wxWindow* win);
@@ -56,12 +58,12 @@ wxBitmap create_menu_bitmap(const std::string& bmp_name);
 
 // BBS: support resize by fill border
 #if 1
-wxBitmap create_scaled_bitmap(const std::string& bmp_name, wxWindow *win = nullptr, 
+wxBitmap create_scaled_bitmap(const std::string& bmp_name, wxWindow *win = nullptr,
     const int px_cnt = 16, const bool grayscale = false,
     const std::string& new_color = std::string(), // color witch will used instead of orange
     const bool menu_bitmap = false, const bool resize = false);
 #else
-wxBitmap create_scaled_bitmap(const std::string& bmp_name, wxWindow *win = nullptr, 
+wxBitmap create_scaled_bitmap(const std::string& bmp_name, wxWindow *win = nullptr,
     const int px_cnt = 16, const bool grayscale = false, const bool resize = false);
 #endif
 
@@ -150,7 +152,7 @@ public:
     ScalableBitmap() {};
     ScalableBitmap( wxWindow *parent,
                     const std::string& icon_name = "",
-                    const int px_cnt = 16, 
+                    const int px_cnt = 16,
                     const bool grayscale = false,
                     const bool resize = false); // BBS: support resize by fill border
 
@@ -262,7 +264,7 @@ private:
 
     bool            m_use_default_disabled_bitmap {false};
 
-    // bitmap dimensions 
+    // bitmap dimensions
     int             m_px_cnt{ 16 };
     bool            m_has_border {false};
 };
@@ -402,10 +404,10 @@ class ImageTransientPopup : public PopupWindow
     void SetImage(wxBitmap bmp);
 
     // PopupWindow virtual methods are all overridden to log them
-    virtual void Popup(wxWindow *focus = NULL) wxOVERRIDE;
-    virtual void OnDismiss() wxOVERRIDE;
-    virtual bool ProcessLeftDown(wxMouseEvent& event) wxOVERRIDE;
-    virtual bool Show( bool show = true ) wxOVERRIDE;
+    virtual void Popup(wxWindow *focus = NULL) override;
+    virtual void OnDismiss() override;
+    virtual bool ProcessLeftDown(wxMouseEvent& event) override;
+    virtual bool Show( bool show = true ) override;
 
 private:
 

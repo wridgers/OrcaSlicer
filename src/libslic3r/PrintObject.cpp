@@ -26,6 +26,7 @@
 #include <boost/log/trivial.hpp>
 
 #include <tbb/parallel_for.h>
+#include <tbb/spin_mutex.h>
 
 #include <Shiny/Shiny.h>
 
@@ -475,8 +476,7 @@ void PrintObject::generate_support_material()
                     {SharpTail,L("floating regions")},
                     {Cantilever,L("floating cantilever")},
                     {LargeOverhang,L("large overhangs")} };
-                std::string warning_message = format(L("It seems object %s has %s. Please re-orient the object or enable support generation."),
-                    this->model_object()->name, reasons[sntype]);
+                std::string warning_message = (boost::format("It seems object %1% has %2%. Please re-orient the object or enable support generation.")%this->model_object()->name%reasons[sntype]).str();
                 this->active_step_add_warning(PrintStateBase::WarningLevel::CRITICAL, warning_message, PrintStateBase::SlicingNeedSupportOn);
             }
 
@@ -792,7 +792,7 @@ bool PrintObject::invalidate_state_by_config_options(
         } else if (
                opt_key == "bottom_shell_layers"
             || opt_key == "top_shell_layers") {
-            
+
             steps.emplace_back(posPrepareInfill);
 
             const auto *old_shell_layers = old_config.option<ConfigOptionInt>(opt_key);
@@ -804,7 +804,7 @@ bool PrintObject::invalidate_state_by_config_options(
 
             if (value_changed && this->object_extruders().size() > 1) {
                 steps.emplace_back(posSlice);
-            }               
+            }
             else if (m_print->config().spiral_mode && opt_key == "bottom_shell_layers") {
                 // Changing the number of bottom layers when a spiral vase is enabled requires re-slicing the object again.
                 // Otherwise, holes in the bottom layers could be filled, as is reported in GH #5528.

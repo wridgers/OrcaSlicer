@@ -3,6 +3,8 @@
 #include "SLA/IndexedMesh.hpp"
 #include "Model.hpp"
 
+#include <unordered_set>
+
 namespace Slic3r {
 static const double BBOX_OFFSET = 2.0;
 void FaceDetector::detect_exterior_face()
